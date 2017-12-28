@@ -20,7 +20,7 @@ The current implementation is my personal approach to the challenges I have face
 
 ![OWS Concept](https://github.com/panchazo/open-weather-station/blob/master/docs/img/concept.jpg)
 
-An Arduino Uno module reads data from sensors and every minute sends a payload of data via bluetooth to a connected device. The “connected device” is an android smartphone running an app (the app will be ready soon) that receives this information, stores it in memory, displays the data on the screen and if needed it can push the measures to an external service such a wunderground or another custom cloud service either via wifi and/or mobile network - this is one of the primary advantages of using the smartphone. You could also write a Raspberry Pi program to connect to the Arduino via bluetooth to receive the data if the Android app is not suitable for you (at this point the Pi implementation is not in the scope of the project).
+An Arduino Uno module reads data from sensors and every minute sends a payload of data via bluetooth to a connected device. The “connected device” is an android smartphone running an app (the app will be ready soon) that receives this information, stores it in memory, displays the data on the screen and if needed it can push the measures to an external service such as wunderground or another custom cloud service either via wifi and/or mobile network - this is one of the primary advantages of using the smartphone. You could also write a Raspberry Pi program to connect to the Arduino via bluetooth to receive the data if the Android app is not suitable for you (at this point the Pi implementation is not in the scope of the project).
 
 Next you can read more about the concepts behind this implementation. Otherwise click here to [jump to the assembly instructions](#arduino-module-assembly).
 
@@ -76,8 +76,8 @@ Arduino module connects to an android app via bluetooth, this app will be releas
 # Connecting other devices
 Since the sensing Arduino module transmits the data every minute you could build your own solution that connects to it via bluetooth and process the data as you wish instead of using the proposed android app. For instance a Raspberry implementation could be a great alternative to achieve this, or you could write a Windows 10 application and connect to the module with your computer, just to mention couple examples. This alternatives however are outside the scope of the current project for the time being.
 
-# Arduino module assembly (TODO)
-Next I depict some guidelines so you can build your own module step by step.
+# Arduino module assembly
+Next I depict some guidelines so you can build your own module step by step. (TODO)
 
 * required list of materials
 * PCB module shield
