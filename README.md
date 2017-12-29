@@ -77,18 +77,79 @@ Arduino module connects to an android app via bluetooth, this app will be releas
 Since the sensing Arduino module transmits the data every minute you could build your own solution that connects to it via bluetooth and process the data as you wish instead of using the proposed android app. For instance a Raspberry implementation could be a great alternative to achieve this, or you could write a Windows 10 application and connect to the module with your computer, just to mention couple examples. This alternatives however are outside the scope of the current project for the time being.
 
 # Arduino module assembly
-Next I depict some guidelines so you can build your own module step by step. (TODO)
+Next I depict some guidelines so you can build your own module step by step.
 
-* required list of materials
-* PCB module shield
-* Diagram
-* Sketch
-* Printing sheet
-* Burning procedure
-* Parts soldering/cabling
-* Module connection
-* Housing recommendations
-* Connectivity test
+![OWS assembly](https://github.com/panchazo/open-weather-station/blob/master/docs/img/assembly_teaser.jpg)
 
+## Schematics diagram
+
+![OWS schematics](https://github.com/panchazo/open-weather-station/blob/master/docs/img/circuit_diagram.png)
+
+## List of materials
+
+The following is the full list of materials needed to implement the station with all its features. In the next sections I will instruct how to assembly the OWS arduino module considering the ideal scenario with all the components, however the module will still work if you don’t connect all sensors, so, if you only want to measure wind speed for instance you can simply ignore the rain, light or pressure sensors.
+
+| Item                                                                                                                                | Quantity | Use                                   |
+|-------------------------------------------------------------------------------------------------------------------------------------|----------|---------------------------------------|
+| Arduino Uno R3                                                                                                                      | 1        | procesing unit                        |
+| Single side copper PCB 5cm x 7cm or bigger                                                                                          | 1        | pcb shield to connect components      |
+| Red or Green led                                                                                                                    | 1        | status light                          |
+| 18 kOhm resistor                                                                                                                    | 2        | anemometer and rain debounce circuit  |
+| 12 kOhm resistor                                                                                                                    | 2        | anemometer and rain debounce circuit  |
+| 10 kOhm resistor                                                                                                                    | 1        | windvane                              |
+| 220 Ohm resistor                                                                                                                    | 1        | status led                            |
+| 2.2 Kohm resistor                                                                                                                   | 1        | bluetooth                             |
+| 1 kOhm resistor                                                                                                                     | 1        | bluetooth                             |
+| dual rj11 jack                                                                                                                      | 1        | anemometer, wind vane and rain cables |
+| diode                                                                                                                               | 2        | anemometer and rain debounce circuit  |
+| 1μFcapacitor                                                                                                                        | 2        | anemometer and rain debounce circuit  |
+| NPN transistor                                                                                                                      | 1        | bluetooth                             |
+| BHT1750 Light sensor                                                                                                                | 1        | llight                                |
+| BME280 pressure, temperature, humidity sensor                                                                                       | 1        | pressure, temperature, humidity       |
+| HC05 Bluetooth module                                                                                                               | 1        | bluetooth communications              |
+| 110v/220v power cable                                                                                                               | 1        | power                                 |
+| WS 1080 replacement anemometer sensor                                                                                               | 1        | wind speed                            |
+| WS 1080 replacement wind vane sensor                                                                                                | 1        | wind direction angle                  |
+| WS 1080 replacement rain gauge sensor                                                                                               | 1        | rain                                  |
+| 15x10x10cm or similar, outdoor plastic housing                                                                                      | 1        | protect the OWS module from elements  |
+| portable power bank charger 5000mAh or similar that operates without user intervention - must NOT need a button push for it to work | 1        | OWS power backup for Arduino          |
+| 110/220v dual usb wall socket charger module                                                                                        | 1        | OWS usb power source                  |
+| standard header pins pack                                                                                                           | 1        | connecting the wires                  |
+| female to female jumper wires pack                                                                                                  | 1        | wiring sensors                        |
+
+## PCB board and assembly code list
+
+![OWS pcb](https://github.com/panchazo/open-weather-station/blob/master/docs/img/pcb-components.png)
+
+| Item              | assembly code |
+|-------------------|---------------|
+| 18 kOhm resistor  | R6, R2        |
+| 12 kOhm resistor  | R8, R4        |
+| 10 kOhm resistor  | R9            |
+| 220 Ohm resistor  | R10           |
+| 2.2 Kohm resistor | R11           |
+| 1 kOhm resistor   | R12           |
+| diode             | D1, D2        |
+| 1μFcapacitor      | C1, C2        |
+
+## PCB Etching
+
+There are several techniques to produce the board circuit, from manually drawing the circuit with a permanent marker to a tone transfer method (https://www.youtube.com/watch?v=QQupRXEqOz4). Since there are plenty of videos and tutorials on how to do it I will let you choose the method of your preference. In case you go for the tone transfer method, recall it’s very important to use a photo quality glossy paper.
+
+Any case you can use this PDF sheet (link) or use the next copper circuit image to produce the pcb. Both have a size reference in the left side (50mm) you can use to make sure the printer did not alter its original dimensions and recall also that the circuit has already been mirrored for your convenience. 
+
+![OWS pcb](https://github.com/panchazo/open-weather-station/blob/master/docs/img/pcb_copper_mirror.png)
+
+## Parts soldering/cabling
+TODO
+
+## Module connection
+TODO
+
+## Housing recommendations
+TODO
+
+## Connectivity test
+TODO
 
 
