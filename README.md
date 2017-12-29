@@ -91,8 +91,6 @@ The following is the full list of materials needed to implement the station with
 
 | Item                                                                                                                                | Quantity | Use                                   |
 |-------------------------------------------------------------------------------------------------------------------------------------|----------|---------------------------------------|
-| Arduino Uno R3                                                                                                                      | 1        | procesing unit                        |
-| Single side copper PCB 5cm x 7cm or bigger                                                                                          | 1        | pcb shield to connect components      |
 | Red or Green led                                                                                                                    | 1        | status light                          |
 | 18 kOhm resistor                                                                                                                    | 2        | anemometer and rain debounce circuit  |
 | 12 kOhm resistor                                                                                                                    | 2        | anemometer and rain debounce circuit  |
@@ -100,22 +98,29 @@ The following is the full list of materials needed to implement the station with
 | 220 Ohm resistor                                                                                                                    | 1        | status led                            |
 | 2.2 Kohm resistor                                                                                                                   | 1        | bluetooth                             |
 | 1 kOhm resistor                                                                                                                     | 1        | bluetooth                             |
-| dual rj11 jack                                                                                                                      | 1        | anemometer, wind vane and rain cables |
+| dual rj11 jack [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/rj11_socket.jpg)                                                                                                                     | 1        | anemometer, wind vane and rain cables |
 | diode                                                                                                                               | 2        | anemometer and rain debounce circuit  |
-| 1μFcapacitor                                                                                                                        | 2        | anemometer and rain debounce circuit  |
+| 1μF capacitor                                                                                                                        | 2        | anemometer and rain debounce circuit  |
 | NPN transistor                                                                                                                      | 1        | bluetooth                             |
+| Single side copper PCB 5cm x 7cm or bigger [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/pcb_single_side_copper.jpg)                                                                                          | 1        | pcb shield to connect components      |
+| Arduino Uno R3                                                                                                                     | 1        | procesing unit                        |
 | BHT1750 Light sensor                                                                                                                | 1        | llight                                |
 | BME280 pressure, temperature, humidity sensor                                                                                       | 1        | pressure, temperature, humidity       |
 | HC05 Bluetooth module                                                                                                               | 1        | bluetooth communications              |
-| 110v/220v power cable                                                                                                               | 1        | power                                 |
-| WS 1080 replacement anemometer sensor                                                                                               | 1        | wind speed                            |
-| WS 1080 replacement wind vane sensor                                                                                                | 1        | wind direction angle                  |
-| WS 1080 replacement rain gauge sensor                                                                                               | 1        | rain                                  |
-| 15x10x10cm or similar, outdoor plastic housing                                                                                      | 1        | protect the OWS module from elements  |
+| WS 1080 replacement anemometer sensor  [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/ws1080_anemometer.jpg)                                                                                              | 1        | wind speed                            |
+| WS 1080 replacement wind vane sensor [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/ws1080_windvane.jpg)                                                                                               | 1        | wind direction angle                  |
+| WS 1080 replacement rain gauge sensor [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/ws1080_rain_gauge.jpg)                                                                                               | 1        | rain                                  |
+| standard header pins pack [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/header_pins.jpg)                                                                                                           | 1        | connecting the wires                  |
+| female to female jumper wires pack [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/female_female_jumper_wires.jpg)                                                                                                 | 1        | wiring sensors                        |
 | portable power bank charger 5000mAh or similar that operates without user intervention - must NOT need a button push for it to work | 1        | OWS power backup for Arduino          |
-| 110/220v dual usb wall socket charger module                                                                                        | 1        | OWS usb power source                  |
-| standard header pins pack                                                                                                           | 1        | connecting the wires                  |
-| female to female jumper wires pack                                                                                                  | 1        | wiring sensors                        |
+| 15x10x10cm or similar, outdoor plastic housing                                                                                      | 1        | protect the OWS module from elements  |
+| 110/220v dual usb wall socket charger module [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/dual_usb_wall_socket_charger_module.jpg)                                                                                       | 1        | OWS usb power source                  |
+| 110v/220v power cable [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/110-220_power_cable.jpg)                                                                                                              | 1        | power                                 |
+| WS 1080 anemometer and wind vane plastic support [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/ws1080_anemometer_windvane_support.jpg)                                                                                                                    | 1        | support for wind sensors                          |
+| WS 1080 rain gauge plastic  support [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/ws1080_rain_gauge_support.jpg)                                                                                                                   | 1        | support for rain sensors                          |
+***
+**Please recall that I have included all components needed for a full OWS Arduino module assembly, you can purcharse only those related to the sensors you want to implement or even build your own if you want to reduce some costs (like the wind and rain plastic supports). The Arduino code implementation will still work if only some sensors are connected.**
+***
 
 ## PCB board and assembly code list
 
@@ -136,20 +141,34 @@ The following is the full list of materials needed to implement the station with
 
 There are several techniques to produce the board circuit, from manually drawing the circuit with a permanent marker to a tone transfer method (https://www.youtube.com/watch?v=QQupRXEqOz4). Since there are plenty of videos and tutorials on how to do it I will let you choose the method of your preference. In case you go for the tone transfer method, recall it’s very important to use a photo quality glossy paper.
 
-Any case you can use this PDF sheet (link) or use the next copper circuit image to produce the pcb. Both have a size reference in the left side (50mm) you can use to make sure the printer did not alter its original dimensions and recall also that the circuit has already been mirrored for your convenience. 
+Any case you can use [this PDF sheet](https://github.com/panchazo/open-weather-station/blob/master/docs/pcb%20printing%20sheet.pdf) or use the next copper circuit image to produce the pcb. Both have a size reference in the left side (50mm) you can use to make sure the printer did not alter its original dimensions and recall also that the circuit has already been mirrored for your convenience. 
 
 ![OWS pcb](https://github.com/panchazo/open-weather-station/blob/master/docs/img/pcb_copper_mirror.png)
 
-## Parts soldering/cabling
+## Soldering, wiring & powering
 TODO
 
-## Module connection
-TODO
+* Etch PCB
+* Drill PCB
+* Solder surface components
+* Wire and connect sensors
+  * Wind speed, wind direction and rain
+    * RJ11 jack
+  * Pressure, temperature & humidity
+    * BME280
+  * Light
+    * BHT1750
+  * Bluetooth
+    * HC05
+* Powering arduino module
+* Housing recommendations
 
-## Housing recommendations
-TODO
 
-## Connectivity test
+## Bluetooth connection & testing
 TODO
+* Loading OWS Arduino Module software
+* PC
+* Cellphone
+
 
 
