@@ -234,7 +234,7 @@ Connect the BME chip using the female to female jumper wires to the “bme” ma
 Light amount measured in lux is obtained using the BH1750 sensor. Connect the chip using the female to female jumper wires to the “bht” male header pin on the module board.
 
 ## Bluetooth
-The arduino module, as explained before, sends the data using the HC05 Bluetooth module. To connect it to the board simply plug the HC05 to the “blue” female header pins as shown in the following image:
+The arduino module, as explained before, sends the data using the HC05 Bluetooth module. To connect it to the board simply plug the HC05 to the “blue” female header pins as shown in the gallery.
 
 ## Status Led
 The status led is just a red or green led that blinks to indicate that the station is working. Therefore I recommend placing the led where it is visible. Wire the led with a female jumper to the “stat” male header pin on the module board (recall to connect the shortest leg of the led to the board pin that is connected to ground). 
