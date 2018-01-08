@@ -165,7 +165,7 @@ The following is the full list of materials needed to implement the station with
 ## Soldering & wiring
 I have a detailed step by step image galleries that you can use a reference to produce the OWS from zero to 100%: 
 
-* __[Step by step galleries](https://github.com/panchazo/open-weather-station/blob/master/docs/img/assembly-step-by-tep/)
+* __[Step by step galleries](https://github.com/panchazo/open-weather-station/blob/master/docs/img/assembly-step-by-step/)
 
 I will explain aswell how to assembly and arrange the components as a reference for you to start building your own station in the following sections.
 
