@@ -33,16 +33,9 @@
   * [Drill PCB board](#drill-pcb-board) 
   * [Solder surface components](#solder-surface-components) 
   * [Wire and connect sensors](#wire-and-connect-sensors) 
-    * [Wind speed, wind direction and rain](#wind-speed-wind-direction-and-rain) 
-    * [Pressure, temperature & humidity](#pressure-temperature-humidity) 
-    * [Light](#light) 
-    * [Bluetooth](#bluetooth) 
-    * [Status Led](#status-led) 
   * [Powering arduino module](#powering-arduino-module) 
   * [Housing recommendations](#housing-recommendations) 
   * [Load the code and run](#load-the-code-and-run) 
-    * [About arduino program constants](#about-arduino-program-constants) 
-    * [Partial and full data samples](#partial-and-full-data-samples) 
   * [Connect to the OWS module via bluetooth](#connect-to-the-OWS-module-via-bluetooth) 
   * [Sending commands to the OWS module](#sending-commands-to-the-OWS-module) 
 * [Coming next, the App](#coming-next-the-app) 
@@ -170,7 +163,11 @@ The following is the full list of materials needed to implement the station with
 ***
 
 ## Soldering & wiring
-I have a detailed step by step image galleries that you can use a reference to produce the OWS from zero to 100%. I will explain aswell how to assembly and arrange the components as a reference for you to start building your own station in the following sections.
+I have a detailed step by step image galleries that you can use a reference to produce the OWS from zero to 100%: 
+
+* __[Step by step galleries](https://github.com/panchazo/open-weather-station/blob/master/docs/img/assembly-step-by-tep/)
+
+I will explain aswell how to assembly and arrange the components as a reference for you to start building your own station in the following sections.
 
 ### PCB Etching
 
@@ -179,6 +176,8 @@ There are several techniques to produce the board circuit, from manually drawing
 Any case you can use [this PDF sheet](https://github.com/panchazo/open-weather-station/blob/master/docs/pcb%20printing%20sheet.pdf) or use the next copper circuit image to produce the pcb. Both have a size reference in the left side (50mm) you can use to make sure the printer did not alter its original dimensions and recall also that the circuit has already been mirrored for your convenience. 
 
 ![OWS pcb](https://github.com/panchazo/open-weather-station/blob/master/docs/img/pcb_copper_mirror.png)
+
+
 
 ### PCB Drilling
 
@@ -246,11 +245,11 @@ To power the module connect the Arduino Uno USB cable to the portable power bank
 The wall socket charger module connects to 110/220v to feed power to the module. I recommend wiring it with the 110/220v power cable so it is easier later on to connect it to any power outlet. You could also accomplish the same using a regular usb wall charger, but please be sure to protect it inside the housing as usually chargers will not work well exposed outdoors for a long period of time.
 
 # Housing recommendations
-The following images illustrate how I arrange the module and all the elements inside the outdoor plastic housing, although you may try your own approach. Just keep in mind that you need to protect all the electronics from the elements (such as strong winds, hailstorms, rain, etc.). Sunlight is very harmful for plastics that are not UV protected so try to use materials that are prepared to be outdoor. 
+Step by step gallery images illustrate how I arrange the module and all the elements inside the outdoor plastic housing, although you may try your own approach. Just keep in mind that you need to protect all the electronics from the elements (such as strong winds, hailstorms, rain, etc.). Sunlight is very harmful for plastics that are not UV protected so try to use materials that are prepared to be outdoor. 
 
 Some prefer to use the Stevenson screen for this purpose (https://en.wikipedia.org/wiki/Stevenson_screen). 
 
-The BME280 have to be exposed (but protected) to properly measure temperature, pressure and humidity, so it is not advisable to enclose it in a sealed box (likewise the BH1750 to measure light). Also keep in mind the heat that direct sun will produce on the housing and on the sensors as it can raise electronics temperatures a lot. I have tested the OWS exposed to direct sun for several days with an internal housing temperature rounding 65ºC without any issues.
+The BME280 have to be exposed (but protected) to properly measure temperature, pressure and humidity, so it is not advisable to enclose it in a sealed box (likewise the BH1750 to measure light). Also keep in mind the heat that direct sun will produce on the housing and on the sensors as it can raise electronics temperatures a lot. I have tested the OWS exposed to direct sun for several days with an internal housing temperature rounding 60ºC without any issues.
 
 # Load the code and run
 First off you need to load the arduino program. Inside the “arduino” project folder you will find another folder called “open-weather-station” where the .ino program file is located. Also, inside the “arduino” folder I have placed the libraries that you will need for the specific sensors, include those libraries in your arduino project (https://www.arduino.cc/en/Guide/Libraries) and it should be ready to compile. 
@@ -259,17 +258,17 @@ I did my best to organize, add comments the code and keep the code simple to mak
 
 ## About arduino program constants
 
-* ENABLE_DEBUG_SERIAL_OUTPUT: if true it will output data to the serial monitor. I recommend using it at first to know if it is working properly and sensors are acquiring data. You can turn it off for production.
+* __ENABLE_DEBUG_SERIAL_OUTPUT__: if true it will output data to the serial monitor. I recommend using it at first to know if it is working properly and sensors are acquiring data. You can turn it off for production.
 
-* ARDUINO_AUTOREBOOT_MINUTES: once the amount of minutes defined in this constant elapses the arduino will auto reboot and reset the bluetooth chip (turn off and on again). This timer can be restarted by sending a command to the module. 
+* __ARDUINO_AUTOREBOOT_MINUTES__: once the amount of minutes defined in this constant elapses the arduino will auto reboot and reset the bluetooth chip (turn off and on again). This timer can be restarted by sending a command to the module. 
 
-* SEND_CALCULATED_WIND_SPEED_MS and SEND_CALCULATED_RAIN_MM: the module will send the cycles per second it counts for anemometer and rain gauge so you can convert this to an actual wind speed or millimeters of rain in the other end and apply your own calibration. If these constants are set to true, the station will perform this calculation internally and send also the calculated windspeed and rain based on default calibrations parameters you can manipulate by changing the following constants:
+* __SEND_CALCULATED_WIND_SPEED_MS__ and __SEND_CALCULATED_RAIN_MM__: the module will send the cycles per second it counts for anemometer and rain gauge so you can convert this to an actual wind speed or millimeters of rain in the other end and apply your own calibration. If these constants are set to true, the station will perform this calculation internally and send also the calculated windspeed and rain based on default calibrations parameters you can manipulate by changing the following constants:
 
-  * ANEMOMETER_SPEED_FACTOR, cup anemometer factor, if you don’t know this value leave it as is
-  * ANEMOMETER_CIRCUMFERENCE_MTS, the circumference of a full cycle calculated from the cup centerpoint
-  * ANEMOMETER_CYCLES_PER_LOOP, how many “counts”  generates the anemometer in a full loop, normally it is 2, but could be 1 depending on your sensor
-  * RAIN_BUCKET_MM_PER_CYCLE, how many mm of rain is equivalent for each count of the sensor
-  * VANE_AD_..., the wind vane has a set of resistors that vary depending on the wind direction, arduino sends 5v through the sensor and will make an analog to digital (A/D) conversion of the value that ranges from 0 to 1023, depending on the vane orientation the A/D value will change. So the VANE_AD_… values are the matching number for each of the directions and are calibrated for the ws1080 wind vane. When the A/D value is acquired the closest matching VANE_AD… value is used to assign the wind direction.
+  * __ANEMOMETER_SPEED_FACTOR__, cup anemometer factor, if you don’t know this value leave it as is
+  * __ANEMOMETER_CIRCUMFERENCE_MTS__, the circumference of a full cycle calculated from the cup centerpoint
+  * __ANEMOMETER_CYCLES_PER_LOOP__, how many “counts”  generates the anemometer in a full loop, normally it is 2, but could be 1 depending on your sensor
+  * __RAIN_BUCKET_MM_PER_CYCLE__, how many mm of rain is equivalent for each count of the sensor
+  * __VANE_AD_...__, the wind vane has a set of resistors that vary depending on the wind direction, arduino sends 5v through the sensor and will make an analog to digital (A/D) conversion of the value that ranges from 0 to 1023, depending on the vane orientation the A/D value will change. So the VANE_AD_… values are the matching number for each of the directions and are calibrated for the ws1080 wind vane. When the A/D value is acquired the closest matching VANE_AD… value is used to assign the wind direction.
 
 The rest of the constants are pretty much self explanatory.
 
@@ -277,15 +276,17 @@ The rest of the constants are pretty much self explanatory.
 The module will send by default every 5 seconds the partial wind samples, useful for instance to show more “real time” wind data, and then, every minute the module sends all the data with the averaged wind samples, gust, temperature, etc. The partial samples are sent from the “sendWindPartialSample” function and the full samples are sent from the “sendFullSamples” function. Each sensor data is separated by a separator (configured in the constants) and each transmission is terminated with a new line. Take a look at those functions in the arduino code to understand how the samples are labeled and sent. I strongly recommend to enable the debug output constant so you can see the data in the arduino serial output monitor otherwise you will need to connect via bluetooth to see any data.
 
 ## Connect to the OWS module via bluetooth
-To connect to the module there are several alternatives. I will not enter into details on how to pair and connect to a bluetooth device from your PC, Mac, laptop, Iphone or Android device since there many tutorials that explain that with greater detail. Just keep in mind that the bluetooth device you are using for the Arduino OWS module will be listed as HC05 when being discovered and if a code is requested to pair to the device the HC05 usually uses 1234 or 0000. If you are connected via an Android bluetooth app (e.g. https://play.google.com/store/apps/details?id=project.bluetoothterminal) for instance or even via Putty to your laptop using a bluetooth COM port (http://www.instructables.com/id/Remote-Control-Bluetooth-Arduino-PuTTY/), you will see in your screen the same payload of data you see in the Arduino IDE serial monitor (providing the debug output flag is set to true).
+To connect to the module there are several alternatives. I will not enter into details on how to pair and connect to a bluetooth device from your PC, Mac, laptop, Iphone or Android device since there many tutorials that explain that with greater detail (nevertheless in the step-by-step gallery you will find some images where I connect using my PC and Android phone). 
+
+Just keep in mind that the bluetooth device you are using for the Arduino OWS module will be listed as HC05 when being discovered and if a code is requested to pair to the device the HC05 usually uses 1234 or 0000. If you are connected via an Android bluetooth app (e.g. https://play.google.com/store/apps/details?id=project.bluetoothterminal) for instance or even via Putty to your laptop using a bluetooth COM port (http://www.instructables.com/id/Remote-Control-Bluetooth-Arduino-PuTTY/), you will see in your screen the same payload of data you see in the Arduino IDE serial monitor (providing the debug output flag is set to true).
 
 ### Sending commands to the OWS module
 You can send commands (single uppercase ascii character) to make the module do some things. The arduino function called “readCmdFromBluetooth” implements this feature. For instance it allows to:
-* character R: restarts the arduino
-* character T: resets the timer that will make the arduino autoreboot every ARDUINO_AUTOREBOOT_MINUTES
-* character S: enables the module to send the partial samples
-* character Q: disables the module to send the partial samples and will only send the full samples every minute
-* character L: send all the measures stored in modules volatile memory for the past WIND_AVG_MINUTE_LOG_SIZE minutes (recall this log is erased after a module reboot and may have been initialized to zero)
+* character __R__: restarts the arduino
+* character __T__: resets the timer that will make the arduino autoreboot every ARDUINO_AUTOREBOOT_MINUTES
+* character __S__: enables the module to send the partial samples
+* character __Q__: disables the module to send the partial samples and will only send the full samples every minute
+* character __L__: send all the measures stored in modules volatile memory for the past WIND_AVG_MINUTE_LOG_SIZE minutes (recall this log is erased after a module reboot and may have been initialized to zero)
 
 # Coming next, the app
-In the upcoming months I will produce an Android app so you can connect to the stations, monitor the parameters in real time, store the samples for long periods of time and see graphics with its evolution and send the information in real time to cloud services. The app will be released as open source too and you will be able to use it as is (apk) or download the code and make your custom flavor of it. Stay tunned!
+__In the upcoming months I will produce an Android app so you can connect to the stations, monitor the parameters in real time, store the samples for long periods of time and see graphics with its evolution and send the information in real time to cloud services. The app will be released as open source too and you will be able to use it as is (apk) or download the code and make your custom flavor of it. Stay tunned!__
