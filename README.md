@@ -268,7 +268,7 @@ I did my best to organize, add comments the code and keep the code simple to mak
   * __ANEMOMETER_CIRCUMFERENCE_MTS__, the circumference of a full cycle calculated from the cup centerpoint
   * __ANEMOMETER_CYCLES_PER_LOOP__, how many “counts”  generates the anemometer in a full loop, normally it is 2, but could be 1 depending on your sensor
   * __RAIN_BUCKET_MM_PER_CYCLE__, how many mm of rain is equivalent for each count of the sensor
-  * __VANE_AD_...__, the wind vane has a set of resistors that vary depending on the wind direction, arduino sends 5v through the sensor and will make an analog to digital (A/D) conversion of the value that ranges from 0 to 1023, depending on the vane orientation the A/D value will change. So the VANE_AD_… values are the matching number for each of the directions and are calibrated for the ws1080 wind vane. When the A/D value is acquired the closest matching VANE_AD… value is used to assign the wind direction.
+  * __VANE_AD...__, the wind vane has a set of resistors that vary depending on the wind direction, arduino sends 5v through the sensor and will make an analog to digital (A/D) conversion of the value that ranges from 0 to 1023, depending on the vane orientation the A/D value will change. So the __VANE_AD…__ values are the matching number for each of the directions and are calibrated for the ws1080 wind vane. When the A/D value is acquired the closest matching __VANE_AD…__ value is used to assign the wind direction.
 
 The rest of the constants are pretty much self explanatory.
 
