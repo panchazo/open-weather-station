@@ -13,18 +13,18 @@
 * [Weather data](#weather-data) 
 * [Concept](#concept) 
   * [Motivation and goals](#motivation-and-goals) 
-  * [Affordable](#affordable) 
-  * [Compact and unattractive to burglary](#compact-and-unattractive-to-burglary) 
-  * [Simple and repeatable to build](#simple-and-repeatable-to-build) 
-  * [Wifi and cell phone network](#wifi-and-cell-phone-network) 
-  * [Power loss](#power-loss) 
-  * [Software stability](#software-stability) 
-  * [Data visualization and diagnosis](#data-visualization-and-diagnosis) 
-  * [Data log and storage](#data-log-and-storage) 
-  * [Reduced maintenance](#reduced-maintenance) 
-* [Why arduino?](#why-arduino) 
-* [Android app](#android-app) 
-* [Connecting other devices](#connecting-other-devices) 
+    * [Affordable](#affordable) 
+    * [Compact and unattractive to burglary](#compact-and-unattractive-to-burglary) 
+    * [Simple and repeatable to build](#simple-and-repeatable-to-build) 
+    * [Wifi and cell phone network](#wifi-and-cell-phone-network) 
+    * [Power loss](#power-loss) 
+    * [Software stability](#software-stability) 
+    * [Data visualization and diagnosis](#data-visualization-and-diagnosis) 
+    * [Data log and storage](#data-log-and-storage) 
+    * [Reduced maintenance](#reduced-maintenance) 
+  * [Why arduino?](#why-arduino) 
+  * [Android app](#android-app) 
+  * [Connecting other devices](#connecting-other-devices) 
 * [Arduino module assembly](#arduino-module-assembly) 
   * [Schematics diagram](#schematics-diagram) 
   * [List of materials](#list-of-materials) 
@@ -177,7 +177,7 @@ Any case you can use [this PDF sheet](https://github.com/panchazo/open-weather-s
 
 ![OWS pcb](https://github.com/panchazo/open-weather-station/blob/master/docs/img/pcb_copper_mirror.png)
 
-
+* [Etchig and Drilling](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/1%20-%20Etching%20and%20drilling)
 
 ### PCB Drilling
 
@@ -197,6 +197,8 @@ Use the following diagram and the list of components to solder each element to t
 
 * pay close attention to the capacitors polarity and diodes direction as instructed in the diagram
 
+* [Soldering header pins](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/2%20-%20PCB%20header%20pins)
+
 ![OWS pcb](https://github.com/panchazo/open-weather-station/blob/master/docs/img/pcb-components.png)
 
 | Item              | assembly code |
@@ -214,9 +216,12 @@ Use the following diagram and the list of components to solder each element to t
 | male header pins to connect to sensors (solder facing up)       | anem, pluv, stat, bmp, bht, vane |
 | female header pins to connect to bluetooth (solder facing up)       | blue |
 
+* [Soldering components](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/3%20-%20Soldering%20components)
 
 # Wire and connect sensors
 Once you have soldered all the elements it is time to connect to the sensors. 
+
+* [Wiring sensors](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/5%20-%20Wire%20sensors%20and%20power)
 
 ## Wind speed, wind direction and rain
 These sensors, which are replacement parts for the WS1080 weather station, use a telephone line (RJ11 plug) that we will interface to the Arduino OWS module using a dual RJ11 jack.
@@ -224,6 +229,8 @@ These sensors, which are replacement parts for the WS1080 weather station, use a
 The anemometer and wind vane use one RJ11 connector where the 2 central pins (red and green cables) connect the anemometer and the 2 outer ones (black and yellow) belong to the wind vane. The rain gauge uses its RJ11 central pins (red and green) to connect to the sensor.
 
 In order to connect the RJ11 Jack to the arduino module use the female jumper wires (cut one of the tips to leave the cable exposed) as illustrated in the step by step gallery images.
+
+* [Wiring RJ11 Jack](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/4%20-%20Wiring%20RJ11%20Jack)
 
 ## Pressure, temperature & humidity
 These three parameters are obtained using the BME280, beware that there are many places selling the BMP280 as if it was the BME, but the BMP will NOT measure humidity so pay close attention to the chip specs before buying. 
@@ -244,12 +251,16 @@ To power the module connect the Arduino Uno USB cable to the portable power bank
 
 The wall socket charger module connects to 110/220v to feed power to the module. I recommend wiring it with the 110/220v power cable so it is easier later on to connect it to any power outlet. You could also accomplish the same using a regular usb wall charger, but please be sure to protect it inside the housing as usually chargers will not work well exposed outdoors for a long period of time.
 
+* [Power the module](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/5%20-%20Wire%20sensors%20and%20power)
+
 # Housing recommendations
 Step by step gallery images illustrate how I arrange the module and all the elements inside the outdoor plastic housing, although you may try your own approach. Just keep in mind that you need to protect all the electronics from the elements (such as strong winds, hailstorms, rain, etc.). Sunlight is very harmful for plastics that are not UV protected so try to use materials that are prepared to be outdoor. 
 
 Some prefer to use the Stevenson screen for this purpose (https://en.wikipedia.org/wiki/Stevenson_screen). 
 
 The BME280 have to be exposed (but protected) to properly measure temperature, pressure and humidity, so it is not advisable to enclose it in a sealed box (likewise the BH1750 to measure light). Also keep in mind the heat that direct sun will produce on the housing and on the sensors as it can raise electronics temperatures a lot. I have tested the OWS exposed to direct sun for several days with an internal housing temperature rounding 60ºC without any issues.
+
+* [Housing](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/8%20-%20Final%20preparation%20and%20housing)
 
 # Load the code and run
 First off you need to load the arduino program. Inside the “arduino” project folder you will find another folder called “open-weather-station” where the .ino program file is located. Also, inside the “arduino” folder I have placed the libraries that you will need for the specific sensors, include those libraries in your arduino project (https://www.arduino.cc/en/Guide/Libraries) and it should be ready to compile. 
@@ -279,6 +290,8 @@ The module will send by default every 5 seconds the partial wind samples, useful
 To connect to the module there are several alternatives. I will not enter into details on how to pair and connect to a bluetooth device from your PC, Mac, laptop, Iphone or Android device since there many tutorials that explain that with greater detail (nevertheless in the step-by-step gallery you will find some images where I connect using my PC and Android phone). 
 
 Just keep in mind that the bluetooth device you are using for the Arduino OWS module will be listed as HC05 when being discovered and if a code is requested to pair to the device the HC05 usually uses 1234 or 0000. If you are connected via an Android bluetooth app (e.g. https://play.google.com/store/apps/details?id=project.bluetoothterminal) for instance or even via Putty to your laptop using a bluetooth COM port (http://www.instructables.com/id/Remote-Control-Bluetooth-Arduino-PuTTY/), you will see in your screen the same payload of data you see in the Arduino IDE serial monitor (providing the debug output flag is set to true).
+
+* [Connect and test](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/7%20-%20connect%20via%20android)
 
 ### Sending commands to the OWS module
 You can send commands (single uppercase ascii character) to make the module do some things. The arduino function called “readCmdFromBluetooth” implements this feature. For instance it allows to:
