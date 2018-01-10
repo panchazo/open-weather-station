@@ -1,10 +1,8 @@
 ![OpenWeatherStation (OWS)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/OpenWeatherStation.png)
 
 **The Open Weather Station (OWS) is an accessible do-it-yourself weather station solution that aims to be affordable, stable, easy to build and tested in the wild. It evolved from other approaches I have been testing and using in the field since late 2012 to this day.**
-
 **Cheers!** 
-
-  ___Eng. Francisco Clariá___
+___Eng. Francisco Clariá___
 
 ![OpenWeatherStation Presentation (OWS)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/openweatherstation_presentation.jpg)
 
@@ -195,9 +193,11 @@ Use the following diagram and the list of components to solder each element to t
 
  * the __blue__ is a female header pin to later on plug the HC05, the red circles denote that no connection is needed on those pins so soldering is not actually required
 
-* pay close attention to the capacitors polarity and diodes direction as instructed in the diagram
+* pay close attention to the capacitors polarity and diodes direction as instructed in the diagram. I have soldered those in the top side so it is easier to show how I did it in the step by step gallery, but it would be better to solder those in the oposite side if you want to achieve a better looking board.
 
 * [Soldering header pins](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/2%20-%20PCB%20header%20pins)
+
+ * You can finish the PCB circuit __after everything is in place and tested__ with a small layer of clear nail polish (varnish) to protect the exposed contacts in order to reduce oxidation.
 
 ![OWS pcb](https://github.com/panchazo/open-weather-station/blob/master/docs/img/pcb-components.png)
 
@@ -247,9 +247,13 @@ The arduino module, as explained before, sends the data using the HC05 Bluetooth
 The status led is just a red or green led that blinks to indicate that the station is working. Therefore I recommend placing the led where it is visible. Wire the led with a female jumper to the “stat” male header pin on the module board (recall to connect the shortest leg of the led to the board pin that is connected to ground). 
 
 # Powering arduino module
-To power the module connect the Arduino Uno USB cable to the portable power bank, and the power bank to one of the 2 available USB outputs on the wall socket charger module, the remaining output can be used later on to connect the Android usb cable to power the smartphone. If you dont want to use a power bank to keep the module on in the event of power loss then you can simply plug the arduino usb cable directly to the wall socket module.
+To power the module connect the Arduino Uno USB cable to the portable power bank, and the power bank to one of the 2 available USB outputs on the wall socket charger module, the remaining output can be used later on to connect the Android usb cable to power the smartphone. If you dont want to use a power bank to keep the module on in the event of power loss then you can simply plug the arduino usb cable directly to the wall socket module. The power bank must comply with the following features: 
 
-The wall socket charger module connects to 110/220v to feed power to the module. I recommend wiring it with the 110/220v power cable so it is easier later on to connect it to any power outlet. You could also accomplish the same using a regular usb wall charger, but please be sure to protect it inside the housing as usually chargers will not work well exposed outdoors for a long period of time.
+* must have a power consumption that the charger can supply, so if you buy one that needs 2A (2000mA) input please use a charger that has __at least__ that output power 
+* the power bank MUST work without user intervention, once plugged, if electricity goes off you wont be there to push any button to turn it on
+* lastly, it has to be able to feed the device WHILE charging it at the same time, some power banks will not output power while being charged
+
+The wall socket charger module connects to 110/220v to feed power to the module. I recommend wiring it with the 110/220v power cable so it is easier later on to connect it to any power outlet. You could also accomplish the same using a regular usb wall charger, but please be sure to protect it inside the housing as usually chargers will not work well exposed outdoors for a long period of time. I have used this approach when I couldnt find a decent 2A output dual wall socket charger module and used a regular dual usb charger instead (with 2A output).
 
 * [Power the module](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/5%20-%20Wire%20sensors%20and%20power)
 
@@ -302,4 +306,4 @@ You can send commands (single uppercase ascii character) to make the module do s
 * character __L__: send all the measures stored in modules volatile memory for the past WIND_AVG_MINUTE_LOG_SIZE minutes (recall this log is erased after a module reboot and may have been initialized to zero)
 
 # Coming next, the app
-__In the upcoming months I will produce an Android app so you can connect to the stations, monitor the parameters in real time, store the samples for long periods of time and see graphics with its evolution and send the information in real time to cloud services. The app will be released as open source too and you will be able to use it as is (apk) or download the code and make your custom flavor of it. Stay tunned!__
+__In the upcoming months I will produce an Android app so you can connect to the stations, monitor the parameters in real time, store the samples for long periods of time and see graphics with its evolution and send the information in real time to cloud services. The app will be released as open source too and you will be able to use it as is (apk) or download the code and make your custom flavor of it. Stay tuned!__
