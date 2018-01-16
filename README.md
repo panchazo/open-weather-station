@@ -47,7 +47,7 @@ ___Eng. Francisco Clariá___
 * wind gust direction (angle)
 * rain (mm)
 * temperature (Cº)
-* atmospheric/barometric pressure (Pascal)
+* absolute atmospheric pressure (Pascal)
 * relative humidity (%)
 * ambient light (lux)
 
