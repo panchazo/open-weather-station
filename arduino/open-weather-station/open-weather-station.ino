@@ -1,27 +1,27 @@
 /**********************************************************************
-                    Open Weather Station 
+                    Open Weather Station
                 https://OpenWeatherStation.com
 
-PROJECT
-This software reads data from the sensors and sends the samples via
-bluetooth. It has been build a part of a larger solution that
-integrates with an external device to connect, store, visualize and
-send data to external services.
+  PROJECT
+  This software reads data from the sensors and sends the samples via
+  bluetooth. It has been build a part of a larger solution that
+  integrates with an external device to connect, store, visualize and
+  send data to external services.
 
-LICENCE
-Copyright 2017 Francisco Claria
+  LICENCE
+  Copyright 2017 Francisco Claria
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 ***********************************************************************/
 
 /**********************************************************************
@@ -44,8 +44,6 @@ limitations under the License.
    CONFIGS
 ***********************************************************************/
 
-#define SEND_CALCULATED_WIND_SPEED_MS true //meters per second, set to false to only send raw wind cycles count
-#define SEND_CALCULATED_RAIN_MM true //millimeters, set to false to only send raw rain cycles count
 #define ARDUINO_AUTOREBOOT_MINUTES 30 //if no ack is received within this minutes arduino autoreboots
 #define ANEMOMETER_PIN 2 //digital pin 2 (interrupt 0)
 #define RAINGAUGE_PIN 3 //digital pin 3 (interrupt 1)
@@ -57,9 +55,7 @@ limitations under the License.
 #define BLUETOOTH_SERIAL_SPEED 9600
 #define WIND_SAMPLING_SECONDS 5 //from 5 to 15 seconds would be recommended
 #define WIND_SAMPLES_SIZE 12 //this value MUST be 60secs/WIND_SAMPLING_SECONDS, eg. 60/6 => 10=WIND_SAMPLES_SIZE
-#define WIND_AVG_MINUTE_LOG_SIZE 18 //this MUST be DATA_EQUAL or greater than 1 to store the current sample
-#define DATA_SEPARATOR ','
-#define DATA_EQUAL '='
+#define WIND_AVG_MINUTE_LOG_SIZE 18 //this MUST be equal or greater than 1 to store the current sample
 
 /**********************************************************************
   WIND/RAIN CALIBRATION VALUES - SPEED, RAIN & WIND ANGLE
@@ -89,7 +85,7 @@ BME280I2C pressureSensor;
 SoftwareSerial bluetooth(BLUETOOTH_SERIAL_RX_PIN, BLUETOOTH_SERIAL_TX_PIN);
 BH1750 lightMeter;
 
-volatile unsigned long nextTimeAnemometerInterrupt = 0 , nextTimeRainIterrupt = 0  ; //software debounce variable
+volatile unsigned long nextTimeAnemometerInterrupt = 0 , nextTimeRainIterrupt = 0  ; //software debounce variables
 volatile int anemometerCyclesCounter = 0, anemometerMinuteCyclesCounter = 0, rainCyclesCounter = 0; //interrupt counters
 unsigned long lastMinuteSampleMillis = 0;
 boolean enableSendWindPartialSamples = true;
@@ -105,9 +101,9 @@ struct WindSample {
 
 struct SensorsSample {
   float temperature;//Cº
-  float humidity;
+  float humidity;//%
   float pressure;//Pa
-  unsigned int lux;
+  int lux;
   float windCyclesPerSecond;
   int windAngle;
   float gustCyclesPerSecond;
@@ -179,23 +175,24 @@ void captureAndSendPartialSample() {
 }
 
 void sendWindPartialSample(Stream &port, WindSample ws) {
-  port.print(F("rw"));
-  port.print(DATA_EQUAL);
-  port.print(ws.windCyclesPerSecond);
-  port.print(DATA_SEPARATOR);
-  if (SEND_CALCULATED_WIND_SPEED_MS) {
-    port.print(F("rws"));
-    port.print(DATA_EQUAL);
-    port.print(ws.windCyclesPerSecond / (float)ANEMOMETER_CYCLES_PER_LOOP * (float)ANEMOMETER_CIRCUMFERENCE_MTS * (float)ANEMOMETER_SPEED_FACTOR);
-    port.print(DATA_SEPARATOR);
-  }
-  port.print(F("ra"));
-  port.print(DATA_EQUAL);
+  port.print(F("{"));
+  port.print(F("\"rt\""));
+  port.print(F(":"));
+  port.print(1);
+  port.print(F(","));
+  port.print(F("\"ws\""));
+  port.print(F(":"));
+  port.print(ws.windCyclesPerSecond / (float)ANEMOMETER_CYCLES_PER_LOOP * (float)ANEMOMETER_CIRCUMFERENCE_MTS * (float)ANEMOMETER_SPEED_FACTOR);
+  port.print(F(","));
+  port.print(F("\"a\""));
+  port.print(F(":"));
   port.print(ws.windAngle);
-  port.print(DATA_SEPARATOR);
-  port.print(F("rms"));
-  port.print(DATA_EQUAL);
-  port.println(ws.sampleMillis);
+  port.print(F(","));
+  port.print(F("\"ms\""));
+  port.print(F(":"));
+  port.print(ws.sampleMillis);
+  port.print(F("}"));
+  port.println();
   port.flush();
 }
 
@@ -210,14 +207,14 @@ void captureAndSendMinuteSample() {
   BME280::PresUnit presUnit(BME280::PresUnit_Pa);
   pressureSensor.read(pressureSensorPressure, pressureSensorTemp, pressureSensorHum, tempUnit, presUnit);
 
-  if (isnan(pressureSensorPressure)) {
-    pressureSensorPressure = -1;
+  if (isnan(pressureSensorPressure) || pressureSensorPressure < 0) {
+    pressureSensorPressure = -500;
   }
-  if (isnan(pressureSensorTemp)) {
+  if (isnan(pressureSensorTemp) || pressureSensorTemp < -273 || pressureSensorTemp > 100) {
     pressureSensorTemp = -500;
   }
-  if (isnan(pressureSensorHum)) {
-    pressureSensorHum = -1;
+  if (isnan(pressureSensorHum) || pressureSensorHum < 0 || pressureSensorHum > 100) {
+    pressureSensorHum = -500;
   }
 
   int avgWindAngle = 0, gustAngle = 0;
@@ -225,11 +222,14 @@ void captureAndSendMinuteSample() {
 
   calcValuesFromWindSamples(windSamples, WIND_SAMPLES_SIZE, avgWindAngle, gustCyclesPerSecond, gustAngle);
 
+  int lightLvl = lightMeter.readLightLevel();
+  lightLvl = (lightLvl > 54612 || lightLvl < 0) ? -500 : lightLvl;
+
   SensorsSample avgMinuteSample = {
     pressureSensorTemp,
     pressureSensorHum,
     pressureSensorPressure,
-    lightMeter.readLightLevel(),
+    lightLvl,
     windCyclesPerSecond,
     avgWindAngle,
     gustCyclesPerSecond,
@@ -251,63 +251,56 @@ void captureAndSendMinuteSample() {
 
 void sendFullSamples(Stream &port, SensorsSample * samples, int samplesToSend) {
   for (int i = 0; i < samplesToSend; i++) {
-    port.print(F("t"));
-    port.print(DATA_EQUAL);
+    port.print(F("{"));
+    port.print(F("\"log\""));
+    port.print(F(":"));
+    port.print(i);
+    port.print(F(","));
+    port.print(F("\"rt\""));
+    port.print(F(":"));
+    port.print(0);
+    port.print(F(","));
+    port.print(F("\"t\""));
+    port.print(F(":"));
     port.print(samples[i].temperature);
-    port.print(DATA_SEPARATOR);
-    port.print(F("h"));
-    port.print(DATA_EQUAL);
+    port.print(F(","));
+    port.print(F("\"h\""));
+    port.print(F(":"));
     port.print(samples[i].humidity);
-    port.print(DATA_SEPARATOR);
-    port.print(F("p"));
-    port.print(DATA_EQUAL);
+    port.print(F(","));
+    port.print(F("\"p\""));
+    port.print(F(":"));
     port.print(samples[i].pressure);
-    port.print(DATA_SEPARATOR);
-    port.print(F("l"));
-    port.print(DATA_EQUAL);
+    port.print(F(","));
+    port.print(F("\"l\""));
+    port.print(F(":"));
     port.print(samples[i].lux);
-    port.print(DATA_SEPARATOR);
-    port.print(F("w"));
-    port.print(DATA_EQUAL);
-    port.print(samples[i].windCyclesPerSecond);
-    port.print(DATA_SEPARATOR);
-    if (SEND_CALCULATED_WIND_SPEED_MS) {
-      port.print(F("ws"));
-      port.print(DATA_EQUAL);
-      port.print(samples[i].windCyclesPerSecond / (float)ANEMOMETER_CYCLES_PER_LOOP * (float)ANEMOMETER_CIRCUMFERENCE_MTS * (float)ANEMOMETER_SPEED_FACTOR);
-      port.print(DATA_SEPARATOR);
-    }
-    port.print(F("wa"));
-    port.print(DATA_EQUAL);
+    port.print(F(","));
+    port.print(F("\"ws\""));
+    port.print(F(":"));
+    port.print(samples[i].windCyclesPerSecond / (float)ANEMOMETER_CYCLES_PER_LOOP * (float)ANEMOMETER_CIRCUMFERENCE_MTS * (float)ANEMOMETER_SPEED_FACTOR);
+    port.print(F(","));
+    port.print(F("\"wa\""));
+    port.print(F(":"));
     port.print(samples[i].windAngle);
-    port.print(DATA_SEPARATOR);
-    port.print(F("g"));
-    port.print(DATA_EQUAL);
-    port.print(samples[i].gustCyclesPerSecond);
-    port.print(DATA_SEPARATOR);
-    if (SEND_CALCULATED_WIND_SPEED_MS) {
-      port.print(F("gs"));
-      port.print(DATA_EQUAL);
-      port.print(samples[i].gustCyclesPerSecond / (float)ANEMOMETER_CYCLES_PER_LOOP * (float)ANEMOMETER_CIRCUMFERENCE_MTS * (float)ANEMOMETER_SPEED_FACTOR);
-      port.print(DATA_SEPARATOR);
-    }
-    port.print(F("ga"));
-    port.print(DATA_EQUAL);
+    port.print(F(","));
+    port.print(F("\"gs\""));
+    port.print(F(":"));
+    port.print(samples[i].gustCyclesPerSecond / (float)ANEMOMETER_CYCLES_PER_LOOP * (float)ANEMOMETER_CIRCUMFERENCE_MTS * (float)ANEMOMETER_SPEED_FACTOR);
+    port.print(F(","));
+    port.print(F("\"ga\""));
+    port.print(F(":"));
     port.print(samples[i].gustAngle);
-    port.print(DATA_SEPARATOR);
-    port.print(F("r"));
-    port.print(DATA_EQUAL);
-    port.print(samples[i].rainCyclesPerMinute);
-    port.print(DATA_SEPARATOR);
-    if (SEND_CALCULATED_RAIN_MM) {
-      port.print(F("rmm"));
-      port.print(DATA_EQUAL);
-      port.print((float)samples[i].rainCyclesPerMinute * (float)RAIN_BUCKET_MM_PER_CYCLE);
-      port.print(DATA_SEPARATOR);
-    }
-    port.print(F("ms"));
-    port.print(DATA_EQUAL);
-    port.println(samples[i].sampleMillis);
+    port.print(F(","));
+    port.print(F("\"rmm\""));
+    port.print(F(":"));
+    port.print((float)samples[i].rainCyclesPerMinute * (float)RAIN_BUCKET_MM_PER_CYCLE);
+    port.print(F(","));
+    port.print(F("\"ms\""));
+    port.print(F(":"));
+    port.print(samples[i].sampleMillis);
+    port.print(F("}"));
+    port.println();
     port.flush();
   }
 }
@@ -328,18 +321,24 @@ void readCmdFromBluetooth() {
     }
     if (c == 'T') {
       timerManager.restartTimer(arduinoAutorebootTimer);
-      bluetooth.println(F("EXT"));
-      bluetooth.flush();
+      if (ENABLE_DEBUG_SERIAL_OUTPUT) {
+        Serial.println(F("EXT"));
+        Serial.flush();
+      }
     }
     if (c == 'S') {
       enableSendWindPartialSamples = true;
-      bluetooth.println(F("RT1"));
-      bluetooth.flush();
+      if (ENABLE_DEBUG_SERIAL_OUTPUT) {
+        Serial.println(F("RT1"));
+        Serial.flush();
+      }
     }
     if (c == 'Q') {
       enableSendWindPartialSamples = false;
-      bluetooth.println(F("RT0"));
-      bluetooth.flush();
+      if (ENABLE_DEBUG_SERIAL_OUTPUT) {
+        Serial.println(F("RT0"));
+        Serial.flush();
+      }
     }
     if (c == 'L') {
       sendFullSamples(bluetooth, avgMinuteSamplesLog, WIND_AVG_MINUTE_LOG_SIZE);
