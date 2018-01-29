@@ -277,7 +277,7 @@ I did my best to organize, add comments the code and keep the code simple to mak
 
 * __ARDUINO_AUTOREBOOT_MINUTES__: once the amount of minutes defined in this constant elapses the arduino will auto reboot and reset the bluetooth chip (turn off and on again). This timer can be restarted by sending a command to the module. 
 
-* __SEND_CALCULATED_WIND_SPEED_MS__ and __SEND_CALCULATED_RAIN_MM__: the module will send the cycles per second it counts for anemometer and rain gauge so you can convert this to an actual wind speed or millimeters of rain in the other end and apply your own calibration. If these constants are set to true, the station will perform this calculation internally and send also the calculated windspeed and rain based on default calibrations parameters you can manipulate by changing the following constants:
+* Calibration parameters: the module will send the cycles per second it counts for anemometer and rain gauge so you can convert this to an actual wind speed or millimeters of rain in the other end and apply your own calibration. Also, the station will perform the calculation internally and send also the calculated windspeed and rain based on default calibrations parameters you can manipulate by changing the following constants:
 
   * __ANEMOMETER_SPEED_FACTOR__, cup anemometer factor, if you don’t know this value leave it as is
   * __ANEMOMETER_CIRCUMFERENCE_MTS__, the circumference of a full cycle calculated from the cup centerpoint
