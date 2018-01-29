@@ -133,8 +133,8 @@ The following is the full list of materials needed to implement the station with
 | 12 kOhm resistor                                                                                                                    | 2        | anemometer and rain debounce circuit  |
 | 10 kOhm resistor                                                                                                                    | 1        | windvane                              |
 | 220 Ohm resistor                                                                                                                    | 1        | status led                            |
-| 2.2 Kohm resistor                                                                                                                   | 1        | bluetooth                             |
-| 1 kOhm resistor                                                                                                                     | 1        | bluetooth                             |
+| 2.2 kOhm resistor                                                                                                                   | 1        | bluetooth                             |
+| 1 kOhm resistor                                                                                                                     | 2        | bluetooth                             |
 | dual rj11 jack [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/rj11_socket.jpg)                                                                                                                     | 1        | anemometer, wind vane and rain cables |
 | diode                                                                                                                               | 2        | anemometer and rain debounce circuit  |
 | 1μF capacitor                                                                                                                        | 2        | anemometer and rain debounce circuit  |
@@ -207,8 +207,8 @@ Use the following diagram and the list of components to solder each element to t
 | 12 kOhm resistor  | R8, R4        |
 | 10 kOhm resistor  | R9            |
 | 220 Ohm resistor  | R10           |
-| 2.2 Kohm resistor | R11           |
-| 1 kOhm resistor   | R12           |
+| 2.2 kOhm resistor | R11           |
+| 1 kOhm resistor   | R12, R13      |
 | 1μF electrolytic capacitor   | C1, C2 |
 | diode             | D1, D2        |
 | NPN Transistor    | NPN           |
