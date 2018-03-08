@@ -1,6 +1,6 @@
 ![OpenWeatherStation (OWS)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/OpenWeatherStation.png)
 
-**The Open Weather Station (OWS) is an accessible do-it-yourself weather station solution that aims to be affordable, stable, easy to build and tested in the wild. It evolved from other approaches I have been testing and using in the field since late 2012 to this day.**
+**The Open Weather Station (OWS) is a do-it-yourself weather station solution that aims to be affordable, stable, easy to build and tested in the wild. It evolved from other approaches I have been testing and using in the field since late 2012 to this day.**
 **Cheers!** 
 ___Eng. Francisco Clariá___
 
