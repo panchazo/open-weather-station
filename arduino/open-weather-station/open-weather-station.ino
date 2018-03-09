@@ -133,6 +133,18 @@ void setup() {
 
   Wire.begin();
   pressureSensor.begin();
+  if (ENABLE_DEBUG_SERIAL_OUTPUT) {
+    switch (pressureSensor.chipModel()) {
+      case BME280::ChipModel_BME280:
+        Serial.println(F("BME"));
+        break;
+      case BME280::ChipModel_BMP280:
+        Serial.println(F("BPM"));
+        break;
+      default:
+        Serial.println(F("?"));
+    }
+  }
   lightMeter.begin();
 
   timerManager.setInterval(1000, blinkStatusLed);
