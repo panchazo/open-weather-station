@@ -108,7 +108,16 @@ The core reasons I decided to use Arduino are:
 *Bottom line, I think that it make it easier if you want to change, extend or improve the current arduino module solution*
 
 # Android App
-Arduino module connects to an android app via bluetooth, this app will be released in the upcoming months and will be open source too. Please take a look back around Febrary/March 2018.
+Arduino module connects to an android app via bluetooth. The app can be downloaded for free from [Google Play](https://play.google.com/store/apps/details?id=com.openweatherstation.app)
+* Once you download the app the first thing is to pair it to the OWS bluetooth. Go to "OWS Module" on the left menu
+* If you havent paired the bluetooth click on the top right icon to open bluetooth settings and pair the device
+* Once paired, go back to the app, and refresh the devices list. 
+* From the list of devices choose the one you want to connect to and set it as the OWS device.
+* You can inspect the packages received from the OWS module by opening the data monitor 
+* When sending the data to a remote service you can turn on "Prevent LieFi" (you need to enable both WiFi and cellular data) 
+   * In the situation that the WiFi connection is working but has no internet Android will not auto switch to cellular data, under this scenario if you have enabled "Prevent LieFi" the app will turn off WiFi and use cellular data packets until WiFi Internet is back, and the app will turn on Wifi again... yes, I know... you are welcome :P
+* All the other settings are pretty much self explanatory.
+
 
 # Connecting other devices
 Since the sensing Arduino module transmits the data every minute you could build your own solution that connects to it via bluetooth and process the data as you wish instead of using the proposed android app. For instance a Raspberry implementation could be a great alternative to achieve this, or you could write a Windows 10 application and connect to the module with your computer, just to mention couple examples. This alternatives however are outside the scope of the current project for the time being.
@@ -304,6 +313,3 @@ You can send commands (single uppercase ascii character) to make the module do s
 * character __S__: enables the module to send the partial samples
 * character __Q__: disables the module to send the partial samples and will only send the full samples every minute
 * character __L__: send all the measures stored in modules volatile memory for the past WIND_AVG_MINUTE_LOG_SIZE minutes (recall this log is erased after a module reboot and may have been initialized to zero)
-
-# Coming next, the app
-__In the upcoming months I will produce an Android app so you can connect to the stations, monitor the parameters in real time, store the samples for long periods of time and see graphics with its evolution and send the information in real time to cloud services. The app will be released as open source too and you will be able to use it as is (apk) or download the code and make your custom flavor of it. Stay tuned!__
