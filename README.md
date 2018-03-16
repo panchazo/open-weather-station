@@ -21,7 +21,7 @@ ___Eng. Francisco Clariá___
     * [Data log and storage](#data-log-and-storage) 
     * [Reduced maintenance](#reduced-maintenance) 
   * [Why arduino?](#why-arduino) 
-  * [Android app](#android-app) 
+* [Android app](#android-app) 
   * [Connecting other devices](#connecting-other-devices) 
 * [Arduino module assembly](#arduino-module-assembly) 
   * [Schematics diagram](#schematics-diagram) 
@@ -108,6 +108,7 @@ The core reasons I decided to use Arduino are:
 *Bottom line, I think that it make it easier if you want to change, extend or improve the current arduino module solution*
 
 # Android App
+
 Arduino module connects to an android app via bluetooth. The app can be downloaded for free from [Google Play](https://play.google.com/store/apps/details?id=com.openweatherstation.app)
 * Once you download the app the first thing is to pair it to the OWS bluetooth. Go to "OWS Module" on the left menu
 * If you havent paired the bluetooth click on the top right icon to open bluetooth settings and pair the device
@@ -118,8 +119,9 @@ Arduino module connects to an android app via bluetooth. The app can be download
    * In the situation that the WiFi connection is working but has no internet Android will not auto switch to cellular data, under this scenario if you have enabled "Prevent LieFi" the app will turn off WiFi and use cellular data packets until WiFi Internet is back, and the app will turn on Wifi again... yes, I know... you are welcome :P
 * All the other settings are pretty much self explanatory.
 
+If you are using the android device for telemetry you may want to root your device and also install the Remote Reboot app (https://play.google.com/store/apps/details?id=ar.com.axones.remotereboot). This app will act as a watchdog allowing you to reboot Android remotely via SMS or using a URL endpoint so everything can start fresh again.
 
-# Connecting other devices
+## Connecting other devices
 Since the sensing Arduino module transmits the data every minute you could build your own solution that connects to it via bluetooth and process the data as you wish instead of using the proposed android app. For instance a Raspberry implementation could be a great alternative to achieve this, or you could write a Windows 10 application and connect to the module with your computer, just to mention couple examples. This alternatives however are outside the scope of the current project for the time being.
 
 # Arduino module assembly
