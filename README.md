@@ -151,7 +151,7 @@ The following is the full list of materials needed to implement the station with
 | 1μF capacitor                                                                                                                        | 2        | anemometer and rain debounce circuit  |
 | NPN transistor                                                                                                                      | 1        | bluetooth                             |
 | Single side copper PCB 5cm x 7cm or bigger [(example)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/pcb_single_side_copper.jpg)                                                                                          | 1        | pcb shield to connect components      |
-| Arduino Uno R3                                                                                                                     | 1        | procesing unit                        |
+| Arduino Uno R3 along with its USB cable                                                                                                                     | 1        | procesing unit                        |
 | BH1750 Light sensor                                                                                                                | 1        | llight                                |
 | BME280 pressure, temperature, humidity sensor                                                                                       | 1        | pressure, temperature, humidity       |
 | HC05 Bluetooth module                                                                                                               | 1        | bluetooth communications              |
