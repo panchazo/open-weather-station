@@ -133,7 +133,7 @@ Next I depict some guidelines so you can build your own module step by step.
 ## Youtube tutorials
 In the following videos I walk you through the details to build the station from 0 to 100%:
 
- * [Part 1 Video - PCB preparation (toner transfer method)](https://www.youtube.com/edit?o=U&video_id=28tQO9Scug0)
+ * [Part 1 Video - PCB preparation (toner transfer method)](https://www.youtube.com/watch?v=28tQO9Scug0)
 
 ## Schematics diagram
 
