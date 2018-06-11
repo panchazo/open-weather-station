@@ -24,6 +24,7 @@ ___Eng. Francisco Clariá___
 * [Android app](#android-app) 
   * [Connecting other devices](#connecting-other-devices) 
 * [Arduino module assembly](#arduino-module-assembly) 
+  * [Youtube tutorials](#youtube-tutorials) 
   * [Schematics diagram](#schematics-diagram) 
   * [List of materials](#list-of-materials) 
   * [Soldering & wiring](#soldering-wiring) 
@@ -128,6 +129,11 @@ Since the sensing Arduino module transmits the data every minute you could build
 Next I depict some guidelines so you can build your own module step by step.
 
 ![OWS assembly](https://github.com/panchazo/open-weather-station/blob/master/docs/img/assembly_teaser.jpg)
+
+## Youtube tutorials
+In the following videos I walk you through the details to build the station from 0 to 100%:
+
+ * [Part 1 Video - PCB preparation (toner transfer method)](https://www.youtube.com/edit?o=U&video_id=28tQO9Scug0)
 
 ## Schematics diagram
 
