@@ -133,8 +133,10 @@ Next I depict some guidelines so you can build your own module step by step.
 ## Youtube tutorials
 In the following videos I walk you through the details to build the station from 0 to 100%:
 
- * [Part 1 Video - PCB preparation (toner transfer method)](https://www.youtube.com/watch?v=28tQO9Scug0)
- * [Part 2 Video - Soldering components](https://www.youtube.com/watch?v=fOKPI9sTK5E)
+ * [Part 1 Video, 3min - PCB preparation (toner transfer method)](https://www.youtube.com/watch?v=28tQO9Scug0)
+ * [Part 2 Video, 5min - Soldering components](https://www.youtube.com/watch?v=fOKPI9sTK5E)
+ * [Part 3 Video, 5min - Wiring sensors, loading sketch and running](https://www.youtube.com/watch?v=DoZqg74PRDg)
+ 
 
 ## Schematics diagram
 
