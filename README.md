@@ -5,6 +5,8 @@
 ___Eng. Francisco Clariá___
 
 ![OpenWeatherStation Presentation (OWS)](https://github.com/panchazo/open-weather-station/blob/master/docs/img/openweatherstation_presentation.jpg)
+# Don't miss the YouTube tutorials!
+Take a look at the [Youtube tutorials](#youtube-tutorials) that will walk you through all the steps to get the station ready :)
 
 # Table of contents
 
@@ -136,6 +138,7 @@ In the following videos I walk you through the details to build the station from
  * [Part 1 Video, 3min - PCB preparation (toner transfer method)](https://www.youtube.com/watch?v=28tQO9Scug0)
  * [Part 2 Video, 5min - Soldering components](https://www.youtube.com/watch?v=fOKPI9sTK5E)
  * [Part 3 Video, 5min - Wiring sensors, loading sketch and running](https://www.youtube.com/watch?v=DoZqg74PRDg)
+ * [Part 4 Video, 5min - Outdoor housing preparation](https://www.youtube.com/watch?v=TYDTiXwKLVI)
  
 
 ## Schematics diagram
