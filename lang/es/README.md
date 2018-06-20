@@ -155,6 +155,7 @@ Además de esta guía armé una serie de videos de referencia para que quede má
  * [Parte 2, 5min - Soldando los componentes](https://www.youtube.com/watch?v=fOKPI9sTK5E)
  * [Parte 3, 5min - Conectando sensores y cargando el arduino](https://www.youtube.com/watch?v=DoZqg74PRDg)
  * [Parte 4, 4min - Preparación para exteriores](https://www.youtube.com/watch?v=TYDTiXwKLVI)
+ 
 __Los videos tienen subtítulos tanto en castellano como inglés.__ 
  
 ## Diagrama esquemático
@@ -276,9 +277,8 @@ These three parameters are obtained using the BME280, beware that there are many
 
 Conecte el chip BME usando los cables hembra-hembra al pin macho del conector "bme" en la placa.
 
-## Light
+## Luz
 La cantidad de luz medida en lux se obtiene usando el sensor BH1750. Conecte el chip usando los cables al pin macho "bht" en la placa.
-
 
 ## Bluetooth
 El módulo arduino, como se explicó anteriormente, envía los datos usando el módulo Bluetooth HC05. Para conectarlo a la placa, simplemente conecte el HC05 a los pines hembra "blue" como se muestra en la galería.
@@ -333,7 +333,7 @@ El módulo enviará por defecto cada 5 segundos las muestras de viento parciales
 ## Conexión bluetooth al módulo OWS 
 Para conectarse al módulo hay varias alternativas. No entraré en detalles sobre cómo emparejar y conectar un dispositivo bluetooth desde su PC, Mac, computadora portátil, dispositivo Iphone o Android, ya que hay muchos tutoriales que explican eso con mayor detalle (sin embargo, en la galería paso a paso muestro algunas imágenes donde me conecto usando mi PC y teléfono Android).
 
-Solo tenga en cuenta que el dispositivo bluetooth que está utilizando para el módulo Arduino OWS aparecerá como HC05 al ser descubierto y, si se solicita un código para vincularlo al dispositivo, el HC05 generalmente usa 1234 o 0000. Si está probando con una app desde un celular (ej. https://play.google.com/store/apps/details?id=project.bluetoothterminal ) por ejemplo o incluso a través de Putty a su computadora portátil usando un puerto COM bluetooth ( http://www.instructables.com) / id / Remote-Control-Bluetooth-Arduino-PuTTY / ), verá en su pantalla los mismos datos que ve en el monitor serie Arduino IDE (siempre que el indicador de salida de depuración esté configurado en verdadero).
+Solo tenga en cuenta que el dispositivo bluetooth que está utilizando para el módulo Arduino OWS aparecerá como HC05 al ser descubierto y, si se solicita un código para vincularlo al dispositivo, el HC05 generalmente usa 1234 o 0000. Si está probando con una app desde un celular (ej. https://play.google.com/store/apps/details?id=project.bluetoothterminal) por ejemplo o incluso a través de Putty a su computadora portátil usando un puerto COM bluetooth (http://www.instructables.com/id/Remote-Control-Bluetooth-Arduino-PuTTY/), verá en su pantalla los mismos datos que ve en el monitor serie Arduino IDE (siempre que el indicador de salida de depuración esté configurado en verdadero).
 
 
 * [Conexión y prueba](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/7%20-%20connect%20via%20android)
