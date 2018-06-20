@@ -1,6 +1,6 @@
 ![OpenWeatherStation (OWS)](https://github.com/panchazo/open-weather-station/raw/master/docs/img/OpenWeatherStation.png)
 
-**OpenWeatherStation es una estación meteorológica de código abierto (OWS) "hágalo usted mismo" que es asequible, estable, fácil de construir y probada por años. Se desarrolló a partir de varias versiones previas que he estado probando y utilizando en el campo desde finales de 2012 hasta la actualidad.**
+**Open Weather Station (OWS) es una solución de estación meteorológica probada, asequible y fácil de construir. Permite monitorear en tiempo real, almacenar meses de datos y enviarlos a su servidor, como así también a Wunderground, Thingspeak, Windguru u OpenWeatherMap via Wifi o GSM/GPRS/3G/4G. Se desarrolló a partir de otros proyectos que he estado probando y utilizando en el campo desde finales de 2012 hasta la actualidad.**
 
 ___Ing. Francisco Clariá___
 

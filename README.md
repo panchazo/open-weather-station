@@ -1,7 +1,6 @@
 ![OpenWeatherStation (OWS)](https://github.com/panchazo/open-weather-station/raw/master/docs/img/OpenWeatherStation.png)
 
-**The Open Weather Station (OWS) is a do-it-yourself weather station solution that aims to be affordable, stable, easy to build and tested in the wild. It evolved from other approaches I have been testing and using in the field since late 2012 to this day.**
-**Cheers!** 
+**The Open Weather Station (OWS) is a do-it-yourself weather station solution that aims to be affordable, stable, easy to build and tested in the wild. Measure, monitor, store months of data and send it to your server as well as Wunderground, Thingspeak, Windguru or OpenWeatherMap via Wifi or GPRS/GSM/4G. It evolved from other approaches I have been testing and using in the field since late 2012 to this day**
 
 ___Eng. Francisco Clariá___
 
