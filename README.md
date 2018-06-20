@@ -37,8 +37,8 @@ Take a look at the [Youtube tutorials](#youtube-tutorials) that will walk you th
   * [Powering arduino module](#powering-arduino-module) 
   * [Housing recommendations](#housing-recommendations) 
   * [Load the code and run](#load-the-code-and-run) 
-  * [Connect to the OWS module via bluetooth](#connect-to-the-OWS-module-via-bluetooth) 
-  * [Sending commands to the OWS module](#sending-commands-to-the-OWS-module) 
+  * [Connect to the OWS module via bluetooth](#connect-to-the-ows-module-via-bluetooth) 
+  * [Sending commands to the OWS module](#sending-commands-to-the-ows-module) 
 * [Author](#author) 
 
 # Weather data
