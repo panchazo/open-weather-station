@@ -30,9 +30,9 @@ Take a look at the [Youtube tutorials](#youtube-tutorials) that will walk you th
   * [Youtube tutorials](#youtube-tutorials) 
   * [Schematics diagram](#schematics-diagram) 
   * [List of materials](#list-of-materials) 
-  * [Soldering & wiring](#soldering-wiring) 
+  * [Soldering & wiring](#soldering-and-wiring) 
   * [PCB etching](#pcb-etching) 
-  * [Drill PCB board](#drill-pcb-board) 
+  * [Drill PCB board](#pcb-drilling) 
   * [Solder surface components](#solder-surface-components) 
   * [Wire and connect sensors](#wire-and-connect-sensors) 
   * [Powering arduino module](#powering-arduino-module) 
@@ -202,7 +202,7 @@ The following is the full list of materials needed to implement the station with
 **Please recall that I have included all components needed for a full OWS Arduino module assembly, you can purcharse only those related to the sensors you want to implement or even build your own if you want to reduce some costs (like the wind and rain plastic supports). The Arduino code implementation will still work if only some sensors are connected.**
 ***
 
-## Soldering & wiring
+## Soldering and wiring
 I have a detailed step by step image galleries that you can use a reference to produce the OWS from zero to 100%: 
 
 * [Step by step galleries](https://github.com/panchazo/open-weather-station/raw/master/docs/img/assembly-step-by-step/)
@@ -323,7 +323,7 @@ I did my best to organize, add comments the code and keep the code simple to mak
 
   * __ANEMOMETER_SPEED_FACTOR__, cup anemometer factor, if you don’t know this value leave it as is
   * __ANEMOMETER_CIRCUMFERENCE_MTS__, the circumference of a full cycle calculated from the cup centerpoint
-  * __ANEMOMETER_CYCLES_PER_LOOP__, how many “counts”  generates the anemometer in a full loop, normally it is 2, but could be 1 depending on your sensor
+  * **ANEMOMETER_CYCLES_PER_LOOP**, how many “counts”  generates the anemometer in a full loop, normally it is 2, but could be 1 depending on your sensor
   * __RAIN_BUCKET_MM_PER_CYCLE__, how many mm of rain is equivalent for each count of the sensor
   * **VANE_AD...**, the wind vane has a set of resistors that vary depending on the wind direction, arduino sends 5v through the sensor and will make an analog to digital (A/D) conversion of the value that ranges from 0 to 1023, depending on the vane orientation the A/D value will change. So the __VANE_AD…__ values are the matching number for each of the directions and are calibrated for the ws1080 wind vane. When the A/D value is acquired the closest matching __VANE_AD…__ value is used to assign the wind direction.
 
