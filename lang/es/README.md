@@ -10,6 +10,7 @@ Echa un vistazo a los [tutoriales de Youtube](#tutoriales-de-youtube) que te gui
 
 # Tabla de contenidos
 
+* [Código fuente más reciente](#código-fuente-más-reciente) 
 * [Métricas de clima](#métricas-de-clima) 
 * [Concepto](#concepto) 
   * [Motivación y objetivos](#motivación-y-objetivos) 
@@ -40,6 +41,15 @@ Echa un vistazo a los [tutoriales de Youtube](#tutoriales-de-youtube) que te gui
   * [Conexión bluetooth al módulo OWS](#conexión-bluetooth-al-módulo-ows) 
   * [Envío de comandos al módulo OWS](#envío-de-comandos-al-módulo-ows) 
 * [Autor](#autor) 
+
+# Código fuente más reciente
+__Descargar la última versión estable liberada desde acá (recomendado):__
+ * [Código fuente para producción](https://github.com/panchazo/open-weather-station/releases)
+
+Para acceder a la versión más reciente aún en desarrollo (no completamente testeada) del proyecto acceder aquí:
+ * [Código fuente de desarrollo](https://github.com/panchazo/open-weather-station/tree/develop)
+ 
+La app de Open Weather Station (sólo para Android) ya está lista para usar y es gratis, sólo es necesario instalarla como cualquier otra app desde [Google Play](https://play.google.com/store/apps/details?id=com.openweatherstation.app). __[Leer más de la App aquí](#aplicación-android)__ 
 
 # Métricas de clima
 **La información generada por OWS cada minuto es la siguiente:**
