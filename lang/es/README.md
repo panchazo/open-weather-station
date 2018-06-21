@@ -358,4 +358,4 @@ Puede enviar comandos (un carácter ascii en mayúscula) para que el módulo hag
 * letra __L__: envíe todas las medidas almacenadas para los últimos WIND_AVG_MINUTE_LOG_SIZE minutos (recuerde que este registro se borra después de reiniciar el módulo y puede haber sido inicializado a cero durante el reinicio)
 
 # Autor
-* **Ing. Francisco Clariá** - https://ar.linkedin.com/in/franciscosc
+* **Ing. Francisco Clariá,  [CTO en Axones](https://axones.com.ar)** - [Linkedin](https://ar.linkedin.com/in/franciscosc)
