@@ -360,9 +360,9 @@ Puede enviar comandos (un carácter ascii en mayúscula) para que el módulo hag
 * letra __L__: envíe todas las medidas almacenadas para los últimos WIND_AVG_MINUTE_LOG_SIZE minutos (recuerde que este registro se borra después de reiniciar el módulo y puede haber sido inicializado a cero durante el reinicio)
 
 # Alimentación con energía solar
-Agregar energía solar es realmente muy simple. Se necesita un panel solar de [12v/20W] (https://www.ebay.com/itm/SOLAR-PANEL-10W-20W-50W-100-WATT-12V-Volt-Solar-Cells-RV-BOAT-OFF-GRID-POLY/381215073651) y un stp down dc-dc [buck converter con doble salida usb] (https://www.ebay.com/itm/DC-6V-40V-12V-To-5V-3A-Dual-USB-Charger-DC-DC-Step-down-Converter-Module-LM2596/322079448357) que tenga un rango de entrada de al menos 9v a 30v y 5v de salida a través de los conectores usb.
+Agregar energía solar es realmente muy simple. Se necesita un panel solar de [12v/20W](https://www.ebay.com/itm/SOLAR-PANEL-10W-20W-50W-100-WATT-12V-Volt-Solar-Cells-RV-BOAT-OFF-GRID-POLY/381215073651) y un stp down dc-dc [buck converter con doble salida usb](https://www.ebay.com/itm/DC-6V-40V-12V-To-5V-3A-Dual-USB-Charger-DC-DC-Step-down-Converter-Module-LM2596/322079448357) que tenga un rango de entrada de al menos 9v a 30v y 5v de salida a través de los conectores usb.
 
-Para alimentar la estación con la energía del panel solar, solo hay que conectar un cable desde el panel a la entrada del step down y luego simplemente conectar la estación a los puertos USB, apuntar el panel al sol y listo. En Córdoba, Argentina (donde vivo), con un  panel de 12v/20W funciona perfectamente, proporcionando suficiente energía incluso en días nublados durante el invierno. Consulta el [video tutorial] (https://youtu.be/kXcF1zWdwbI).
+Para alimentar la estación con la energía del panel solar, solo hay que conectar un cable desde el panel a la entrada del step down y luego simplemente conectar la estación a los puertos USB, apuntar el panel al sol y listo. En Córdoba, Argentina (donde vivo), con un  panel de 12v/20W funciona perfectamente, proporcionando suficiente energía incluso en días nublados durante el invierno. Consulta el [video tutorial](https://youtu.be/kXcF1zWdwbI).
 
 # Autor
 * **Ing. Francisco Clariá,  [CTO en Axones](https://axones.com.ar)** - [Linkedin](https://ar.linkedin.com/in/franciscosc)
