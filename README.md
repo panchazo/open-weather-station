@@ -41,6 +41,7 @@ Take a look at the [Youtube tutorials](#youtube-tutorials) that will walk you th
   * [Load the code and run](#load-the-code-and-run) 
   * [Connect to the OWS module via bluetooth](#connect-to-the-ows-module-via-bluetooth) 
   * [Sending commands to the OWS module](#sending-commands-to-the-ows-module) 
+* [Adding solar power](#adding-solar-power)
 * [Author](#author) 
 
 # Latest code release 
@@ -168,6 +169,7 @@ In the following videos I walk you through the details to build the station from
  * [Part 2 Video, 5min - Soldering components](https://www.youtube.com/watch?v=fOKPI9sTK5E)
  * [Part 3 Video, 5min - Wiring sensors, loading sketch and running](https://www.youtube.com/watch?v=DoZqg74PRDg)
  * [Part 4 Video, 4min - Outdoor housing preparation](https://www.youtube.com/watch?v=TYDTiXwKLVI)
+ * [Part 5 Video, 1min - Adding solar power](https://youtu.be/kXcF1zWdwbI)
  
 
 ## Schematics diagram
@@ -356,6 +358,11 @@ You can send commands (single uppercase ascii character) to make the module do s
 * character __S__: enables the module to send the partial samples
 * character __Q__: disables the module to send the partial samples and will only send the full samples every minute
 * character __L__: send all the measures stored in modules volatile memory for the past WIND_AVG_MINUTE_LOG_SIZE minutes (recall this log is erased after a module reboot and may have been initialized to zero)
+
+# Adding solar power
+Adding solar power to the whole solution is actually very simple. You will need a [12v/20W solar panel(s)](https://www.ebay.com/itm/SOLAR-PANEL-10W-20W-50W-100-WATT-12V-Volt-Solar-Cells-RV-BOAT-OFF-GRID-POLY/381215073651) and a step down dc-dc [buck converter with a dual usb output](https://www.ebay.com/itm/DC-6V-40V-12V-To-5V-3A-Dual-USB-Charger-DC-DC-Step-down-Converter-Module-LM2596/322079448357) that has an input range of at least 9v to 30v and outputs 5v via the usb connectors.
+
+To feed the station with the solar panel energy you only need to connect a cable from the panel to the step down input and then just plug the station to the USB ports. Point the panel to the sun and you are set. In Córdoba, Argentina (where I live) the 12v/20W panel works great providing enough energy even on a cloudy day during winter. Check out the [video tutorial](https://youtu.be/kXcF1zWdwbI).
 
 # Author
 * **Eng. Francisco Clariá** - https://ar.linkedin.com/in/franciscosc
