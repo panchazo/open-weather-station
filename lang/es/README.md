@@ -39,7 +39,8 @@ Echa un vistazo a los [tutoriales de Youtube](#tutoriales-de-youtube) que te gui
   * [Recomendaciones para exteriores](#recomendaciones-para-exteriores) 
   * [Cargar el código al arduino](#cargar-el-código-al-arduino) 
   * [Conexión bluetooth al módulo OWS](#conexión-bluetooth-al-módulo-ows) 
-  * [Envío de comandos al módulo OWS](#envío-de-comandos-al-módulo-ows) 
+  * [Envío de comandos al módulo OWS](#envío-de-comandos-al-módulo-ows)
+* [Alimentación con energía solar](#alimentación-con-energía-solar)
 * [Autor](#autor) 
 
 # Código fuente más reciente
@@ -165,6 +166,7 @@ Además de esta guía armé una serie de videos de referencia para que quede má
  * [Parte 2, 5min - Soldando los componentes](https://www.youtube.com/watch?v=fOKPI9sTK5E)
  * [Parte 3, 5min - Conectando sensores y cargando el arduino](https://www.youtube.com/watch?v=DoZqg74PRDg)
  * [Parte 4, 4min - Preparación para exteriores](https://www.youtube.com/watch?v=TYDTiXwKLVI)
+ * [Parte 5, 1min - Alimentación con energía solar](https://youtu.be/kXcF1zWdwbI)
  
 __Los videos tienen subtítulos tanto en castellano como inglés.__ 
  
@@ -356,6 +358,11 @@ Puede enviar comandos (un carácter ascii en mayúscula) para que el módulo hag
 * letra __S__: permite que el módulo envíe las muestras parciales
 * letra __Q__: deshabilita el módulo para enviar las muestras parciales y solo enviará las muestras completas cada minuto
 * letra __L__: envíe todas las medidas almacenadas para los últimos WIND_AVG_MINUTE_LOG_SIZE minutos (recuerde que este registro se borra después de reiniciar el módulo y puede haber sido inicializado a cero durante el reinicio)
+
+# Alimentación con energía solar
+Agregar energía solar es realmente muy simple. Se necesita un panel solar de [12v/20W] (https://www.ebay.com/itm/SOLAR-PANEL-10W-20W-50W-100-WATT-12V-Volt-Solar-Cells-RV-BOAT-OFF-GRID-POLY/381215073651) y un stp down dc-dc [buck converter con doble salida usb] (https://www.ebay.com/itm/DC-6V-40V-12V-To-5V-3A-Dual-USB-Charger-DC-DC-Step-down-Converter-Module-LM2596/322079448357) que tenga un rango de entrada de al menos 9v a 30v y 5v de salida a través de los conectores usb.
+
+Para alimentar la estación con la energía del panel solar, solo hay que conectar un cable desde el panel a la entrada del step down y luego simplemente conectar la estación a los puertos USB, apuntar el panel al sol y listo. En Córdoba, Argentina (donde vivo), con un  panel de 12v/20W funciona perfectamente, proporcionando suficiente energía incluso en días nublados durante el invierno. Consulta el [video tutorial] (https://youtu.be/kXcF1zWdwbI).
 
 # Autor
 * **Ing. Francisco Clariá,  [CTO en Axones](https://axones.com.ar)** - [Linkedin](https://ar.linkedin.com/in/franciscosc)
