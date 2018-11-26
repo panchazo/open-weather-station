@@ -42,6 +42,7 @@ Take a look at the [Youtube tutorials](#youtube-tutorials) that will walk you th
   * [Connect to the OWS module via bluetooth](#connect-to-the-ows-module-via-bluetooth) 
   * [Sending commands to the OWS module](#sending-commands-to-the-ows-module) 
 * [Adding solar power](#adding-solar-power)
+* [Remote Reboot App](#remote-reboot-app)
 * [Author](#author) 
 
 # Latest code release 
@@ -363,6 +364,12 @@ You can send commands (single uppercase ascii character) to make the module do s
 Adding solar power to the whole solution is actually very simple. You will need a [12v/20W solar panel(s)](https://www.ebay.com/itm/SOLAR-PANEL-10W-20W-50W-100-WATT-12V-Volt-Solar-Cells-RV-BOAT-OFF-GRID-POLY/381215073651) and a step down dc-dc [buck converter with a dual usb output](https://www.ebay.com/itm/DC-6V-40V-12V-To-5V-3A-Dual-USB-Charger-DC-DC-Step-down-Converter-Module-LM2596/322079448357) that has an input range of at least 9v to 30v and outputs 5v via the usb connectors.
 
 To feed the station with the solar panel energy you only need to connect a cable from the panel to the step down input and then just plug the station to the USB ports. Point the panel to the sun and you are set. In Córdoba, Argentina (where I live) the 12v/20W panel works great providing enough energy even on a cloudy day during winter. Check out the [video tutorial](https://youtu.be/kXcF1zWdwbI).
+
+# Remote reboot app
+Since Google Play wont allow any further apps that require SMS access I have uploaded the apk directly to the repo so you can manually install it if needed. __ROOTED DEVICES ONLY__ With this app you can setup a time of the day and the app will automatically reboot android on a daily basis. Or you can configure a text that when received via SMS to the device will make it reboot. Alternatively you can set a remote URL and ping interval and if the resouce returns the configured text the device will reboot. This can be used as a watchdog when android is used as a telemetry device such as in the https://openweatherstation.com project for which this app was originally designed. Use it at your own risk. 
+
+## Download Remote Reboot 
+https://github.com/panchazo/open-weather-station/blob/master/app/RemoteReboot.apk?raw=true
 
 # Author
 * **Eng. Francisco Clariá** - https://ar.linkedin.com/in/franciscosc
