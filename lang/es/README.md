@@ -41,6 +41,7 @@ Echa un vistazo a los [tutoriales de Youtube](#tutoriales-de-youtube) que te gui
   * [Conexión bluetooth al módulo OWS](#conexión-bluetooth-al-módulo-ows) 
   * [Envío de comandos al módulo OWS](#envío-de-comandos-al-módulo-ows)
 * [Alimentación con energía solar](#alimentación-con-energía-solar)
+* [App de Reinicio Remoto](#app-de-reinicio-remoto)
 * [Autor](#autor) 
 
 # Código fuente más reciente
@@ -363,6 +364,12 @@ Puede enviar comandos (un carácter ascii en mayúscula) para que el módulo hag
 Agregar energía solar es realmente muy simple. Se necesita un panel solar de [12v/20W](https://www.ebay.com/itm/SOLAR-PANEL-10W-20W-50W-100-WATT-12V-Volt-Solar-Cells-RV-BOAT-OFF-GRID-POLY/381215073651) y un stp down dc-dc [buck converter con doble salida usb](https://www.ebay.com/itm/DC-6V-40V-12V-To-5V-3A-Dual-USB-Charger-DC-DC-Step-down-Converter-Module-LM2596/322079448357) que tenga un rango de entrada de al menos 9v a 30v y 5v de salida a través de los conectores usb.
 
 Para alimentar la estación con la energía del panel solar, solo hay que conectar un cable desde el panel a la entrada del step down y luego simplemente conectar la estación a los puertos USB, apuntar el panel al sol y listo. En Córdoba, Argentina (donde vivo), con un  panel de 12v/20W funciona perfectamente, proporcionando suficiente energía incluso en días nublados durante el invierno. Consulta el [video tutorial](https://youtu.be/kXcF1zWdwbI).
+
+# App de reinicio remoto
+Google Play ya no permite subir APPs que gestionen el acceso a SMS por lo que he tenido que retirar esta app del store y dejarla disponible para instalacion manual.  __SOLO PARA CELULARES ROOTEADOS__ Con esta app se puede setear que se reinicie Android en un momento dado del día, con la recepción de un SMS o bien mediante el acceso a una URL a cierto intervalo de tiempo. Pensada originalmente como complemento del proyecto de Open Weather Station -  USAR A SU PROPIO RIESGO
+
+## Descargar la app de Remote Reboot 
+https://github.com/panchazo/open-weather-station/blob/master/app/RemoteReboot.apk?raw=true
 
 # Autor
 * **Ing. Francisco Clariá,  [CTO en Axones](https://axones.com.ar)** - [Linkedin](https://ar.linkedin.com/in/franciscosc)
