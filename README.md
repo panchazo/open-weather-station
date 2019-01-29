@@ -288,7 +288,7 @@ In order to connect the RJ11 Jack to the arduino module use the female jumper wi
 * [Wiring RJ11 Jack](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/4%20-%20Wiring%20RJ11%20Jack)
 
 ## Pressure, temperature & humidity
-These three parameters are obtained using the BME280, beware that there are many places selling the BMP280 as if it was the BME, but the BMP will NOT measure humidity so pay close attention to the chip specs before buying. Ideally the BME should be a model with 5v voltage regulator although I have tested and used those with a 3.3v input feed without issues but our experience may differ.
+These three parameters are obtained using the BME280, beware that there are many places selling the BMP280 as if it was the BME, but the BMP will NOT measure humidity so pay close attention to the chip specs before buying. Ideally the BME should be a model with 5v voltage regulator although I have tested those with a 3.3v input feed without issues, so if you cannot find a 5v you may wanna try with a 3.3v and see what happens ;)
 
 Connect the BME chip using the female to female jumper wires to the “bme” male header pin on the module board.
 
