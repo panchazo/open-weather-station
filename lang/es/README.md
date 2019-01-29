@@ -195,7 +195,7 @@ La siguiente es la lista completa de los materiales necesarios para implementar 
 | PCB de cobre de un solo lado de 5 cm x 7 cm o más grande [(ejemplo)](https://github.com/panchazo/open-weather-station/raw/master/docs/img/pcb_single_side_copper.jpg)                                                                                          | 1        | pcb para conectar los componentes      |
 | Arduino Uno R3 y su cable USB                                                                                                                     | 1        | unidad de procesamiento                        |
 | BH1750 sensor de luz                                                                                                                | 1        | luz                                |
-| BME280 sensor presión, temperatura y humedad                                                                                       | 1        | presión, temperatura y humedad       |
+| BME280 sensor presión, temperatura y humedad (alimentacion 5v)                                                                                       | 1        | presión, temperatura y humedad       |
 | HC05 módulo Bluetooth                                                                                                                | 1        | bluetooth               |
 | Anemómetro de repuesto WS 1080  [(ejemplo)](https://github.com/panchazo/open-weather-station/raw/master/docs/img/ws1080_anemometer.jpg)                                                                                              | 1        | viento y rachas
 | Veleta de repuesto WS 1080  [(ejemplo)](https://github.com/panchazo/open-weather-station/raw/master/docs/img/ws1080_windvane.jpg)                                                                                               | 1        | dirección de viento                  |
@@ -286,7 +286,7 @@ Para conectar la toma RJ11 al módulo arduino, utilice los cables hembra (corte 
 * [Cableando el jack RJ11](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/4%20-%20Wiring%20RJ11%20Jack)
 
 ## Presión, temperatura y humedad
-Estos tres parámetros se obtienen desde el sensor BME280. Hay que estar muy atento ya que muchos lugares venden el sensor BMP280 como si éste fuese el BME280, siendo que el **BMP no mide humedad** así que hay que revisar bien las especificaciones antes de comprar.
+Estos tres parámetros se obtienen desde el sensor BME280. Hay que estar muy atento ya que muchos lugares venden el sensor BMP280 como si éste fuese el BME280, siendo que el **BMP no mide humedad** así que hay que revisar bien las especificaciones antes de comprar. Idealmente deberia ser uno que funcione con 5v de alimentacion, he probado comprando de 3.3v y alimentandolos directo a 5v y funcionaron igual pero no es lo optimo.
 
 Conecte el chip BME usando los cables hembra-hembra al pin macho del conector "bme" en la placa.
 
