@@ -197,7 +197,7 @@ The following is the full list of materials needed to implement the station with
 | Single side copper PCB 5cm x 7cm or bigger [(example)](https://github.com/panchazo/open-weather-station/raw/master/docs/img/pcb_single_side_copper.jpg)                                                                                          | 1        | pcb shield to connect components      |
 | Arduino Uno R3 along with its USB cable                                                                                                                     | 1        | procesing unit                        |
 | BH1750 Light sensor                                                                                                                | 1        | llight                                |
-| BME280 pressure, temperature, humidity sensor                                                                                       | 1        | pressure, temperature, humidity       |
+| BME280 pressure, temperature, humidity sensor (5v input feed)                                                                                       | 1        | pressure, temperature, humidity       |
 | HC05 Bluetooth module                                                                                                               | 1        | bluetooth communications              |
 | WS 1080 replacement anemometer sensor  [(example)](https://github.com/panchazo/open-weather-station/raw/master/docs/img/ws1080_anemometer.jpg)                                                                                              | 1        | wind speed                            |
 | WS 1080 replacement wind vane sensor [(example)](https://github.com/panchazo/open-weather-station/raw/master/docs/img/ws1080_windvane.jpg)                                                                                               | 1        | wind direction angle                  |
@@ -288,7 +288,7 @@ In order to connect the RJ11 Jack to the arduino module use the female jumper wi
 * [Wiring RJ11 Jack](https://github.com/panchazo/open-weather-station/tree/master/docs/img/assembly-step-by-step/4%20-%20Wiring%20RJ11%20Jack)
 
 ## Pressure, temperature & humidity
-These three parameters are obtained using the BME280, beware that there are many places selling the BMP280 as if it was the BME, but the BMP will NOT measure humidity so pay close attention to the chip specs before buying. 
+These three parameters are obtained using the BME280, beware that there are many places selling the BMP280 as if it was the BME, but the BMP will NOT measure humidity so pay close attention to the chip specs before buying. Ideally the BME should be a model with 5v voltage regulator although I have tested those with a 3.3v input feed without issues, so if you cannot find a 5v you may wanna try with a 3.3v and see what happens ;)
 
 Connect the BME chip using the female to female jumper wires to the “bme” male header pin on the module board.
 
@@ -374,3 +374,5 @@ https://github.com/panchazo/open-weather-station/blob/master/app/RemoteReboot.ap
 # Author
 * **Eng. Francisco Clariá** - https://ar.linkedin.com/in/franciscosc
 
+# Notes
+The project is still valid and in use. Several people around the world have implemented it successfuly and I thank those who had send me some greetings and photos about their implementation. Cheers!
