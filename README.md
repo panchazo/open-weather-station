@@ -374,3 +374,5 @@ https://github.com/panchazo/open-weather-station/blob/master/app/RemoteReboot.ap
 # Author
 * **Eng. Francisco Clariá** - https://ar.linkedin.com/in/franciscosc
 
+# Notes
+The project is still valid and in use. Several people around the world have implemented it successfuly and I thank those who had send me some greetings and photos about their implementation. Cheers!
