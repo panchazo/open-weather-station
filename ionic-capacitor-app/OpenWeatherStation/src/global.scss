@@ -1,0 +1,64 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+
+
+.imageBackground{
+    background-image: url(/assets/imgs/bg.png);
+    background-size: cover;
+    background-position: center top;
+
+}
+
+.gradientToolbar .toolbar-background{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2f84ad+17,4aa6bf+100 */
+    background: #2f84ad !important; /* Old browsers */
+    background: -moz-linear-gradient(left, #2f84ad 17%, #4aa6bf 100%) !important; /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #2f84ad 17%,#4aa6bf 100%) !important; /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #2f84ad 17%,#4aa6bf 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2f84ad', endColorstr='#4aa6bf',GradientType=1 ) !important; /* IE6-9 */
+    color: white;
+}
+
+.clearGradientToolbar .toolbar-background{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#50b5c9+0,c1eaf2+100&0.7+0,0.9+100 */
+    background: -moz-linear-gradient(left, rgba(57, 173, 195,0.7) 0%, rgba(100, 218, 241,0.9) 100%) !important; /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(57, 173, 195,0.7) 0%, rgba(100, 218, 241,0.9) 100%) !important; /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(57, 173, 195,0.7) 0%, rgba(100, 218, 241,0.9) 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b350b5c9', endColorstr='#e6c1eaf2',GradientType=1 ) !important; /* IE6-9 */
+}

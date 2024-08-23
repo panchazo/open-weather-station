@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-navbar  color="dark" class="gradientToolbar">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title text-start>Settings</ion-title>
+        <ion-buttons end icon-only>
+            <button ion-button (click)="save()" no-padding color="light">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="imageBackground">
+    <ion-card>
+        <ion-item>
+            <ion-label>Keep screen on?</ion-label>
+            <ion-toggle [(ngModel)]="appSettings.keep_screen_on"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Start on boot?</ion-label>
+            <ion-toggle [(ngModel)]="appSettings.start_on_boot"></ion-toggle>
+        </ion-item>
+        <ion-card-content>
+            <p>NOTE: for the app not to hang on boot, the screen must be on until the app has fully started. Under Android screen settings configure set the suspension time (screen turn off time) to at least 1 minutes.</p>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

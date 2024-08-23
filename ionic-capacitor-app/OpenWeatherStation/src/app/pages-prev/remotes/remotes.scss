@@ -1,0 +1,20 @@
+page-remotes {
+    .databox{
+        position:absolute;
+        top:56px;
+        bottom:0;
+        left:0;
+        right:0;
+        z-index:1000;
+        height: calc(100vh - 56px);
+        overflow:auto;
+        text-wrap:none;
+        border-top:3px solid rgba(0,0,0,0.5);
+        background-color: #464646;
+        color:white;
+        font-size: 11px;
+        font-family: monospace;
+        padding:5px;
+        word-wrap:normal;       
+    }
+}

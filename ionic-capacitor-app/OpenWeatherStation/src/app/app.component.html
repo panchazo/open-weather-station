@@ -1,0 +1,39 @@
+<ion-app>
+  <ion-split-pane contentId="main-content" when="lg" class="ion-no-padding">
+    <ion-menu side="start" contentId="main-content" menuId="mainMenu" type="overlay" class="ion-no-padding">
+      <ion-header>
+        <ion-toolbar color="light" class="clearGradientToolbar">
+          <ion-title style="padding-left:20px;" class="ion-no-padding">
+            OpenWeatherStation
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="mainMenuContent">
+        <!-- <ion-menu-toggle  class="mainMenuItems"> comentado porque genera un bug al ocultar con el login -->
+        <ion-list class="ion-no-padding">
+
+          <ion-item button="true" lines="none" *ngFor="let p of pages" (click)="goToPage(p.url)">
+            <ion-label>
+              <b>{{p.title}}</b>
+            </ion-label>
+          </ion-item>
+
+          <ion-item button="true" lines="none" (click)="openUrl('https://openweatherstation.com')">
+            <ion-icon slot="start" name="link" color="medium"></ion-icon>
+            <ion-label color="medium">
+              Project website
+            </ion-label>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label color="medium" class="ion-text-center">
+              <span style="font-size:11px">v{{version}}</span>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <!-- </ion-menu-toggle> -->
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

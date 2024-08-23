@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar color="dark" class="gradientToolbar">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Set OWS device</ion-title>
+
+        <ion-buttons end icon-only>
+            <button ion-button (click)="openBluetoothSettings()" no-padding>
+                    <ion-icon name="settings"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="imageBackground">
+    <ion-list *ngIf="!currentDevice || !currentDevice.address">
+        <ion-list-header>
+            <ion-icon name="alert" item-start></ion-icon>
+            <strong style="color:red">Please set the OWS device </strong><br>
+        </ion-list-header>
+    </ion-list>
+    <ion-list *ngIf="!isCurrentDeviceWithinPaired && currentDevice && currentDevice.address">
+        <ion-list-header>
+            <ion-icon name="alert" item-start></ion-icon>
+            <strong style="color:red">Current OWS device is not paired</strong><br>
+            <span><b>{{currentDevice.name}}</b> ({{currentDevice.address}})</span>
+        </ion-list-header>
+    </ion-list>
+    <ion-card *ngIf="paired && paired.length>0">
+        <ion-list-header>
+            <ion-icon name="bluetooth" item-start></ion-icon>
+            Paired devices
+            <ion-icon name="refresh" item-end (click)="refreshPairedDevices()"></ion-icon>
+        </ion-list-header>
+        <div [innerHTML] = "currentRawData" *ngIf="showRawData" (click)="showRawData=false" class="databox"></div>
+        <ion-item *ngFor="let device of paired" (click)="deviceSelected(device)"> 
+            <ion-icon name="bluetooth" color="black" style="opacity: 0.5" item-start *ngIf="!currentDevice || device.address!=currentDevice.address"></ion-icon>
+            <ion-icon name="bluetooth" color="danger" item-start *ngIf="currentDevice && device.address==currentDevice.address && !isCurrentDeviceConnected"></ion-icon>
+            <ion-icon name="bluetooth" color="secondary" item-start *ngIf="currentDevice && device.address==currentDevice.address && isCurrentDeviceConnected"></ion-icon>
+            <strong>{{device.name}}</strong> <br>
+            <span style="opacity: 0.7">({{device.address}})</span>
+            <ion-badge item-end *ngIf="currentDevice && device.address==currentDevice.address">OWS device</ion-badge>
+            <ion-icon name="more" item-end></ion-icon>
+        </ion-item>
+    </ion-card>
+    <ion-list *ngIf="!paired || paired.length==0">
+        <ion-list-header>
+            <ion-icon name="bluetooth" item-start></ion-icon>
+            No paired devices found
+            <ion-icon name="refresh" item-end (click)="refreshPairedDevices()"></ion-icon>
+        </ion-list-header>
+    </ion-list>
+</ion-content>

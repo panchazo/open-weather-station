@@ -1,0 +1,7 @@
+{
+  "name": "OpenWeatherStation",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

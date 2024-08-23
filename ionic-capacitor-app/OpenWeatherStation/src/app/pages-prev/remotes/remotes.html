@@ -1,0 +1,838 @@
+<ion-header>
+    <ion-navbar  color="dark" class="gradientToolbar">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title text-start>Servers</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-footer>
+    <ion-toolbar color="primary">
+        <ion-buttons end icon-only>
+            <button ion-button (click)="sendExport()" no-padding>
+                    <ion-icon name="share-alt"></ion-icon>
+            </button>
+            <button ion-button (click)="export()" no-padding>
+                    <ion-icon name="download"></ion-icon>
+            </button>
+            <button ion-button (click)="showMonitor()" no-padding>
+                    <ion-icon name="eye"></ion-icon>
+            </button>
+            <button ion-button (click)="deleteConfig()" no-padding>
+                    <ion-icon name="trash"></ion-icon>
+            </button>
+            <button ion-button (click)="saveConfig()"  no-padding>
+                    <ion-icon name="cloud-done"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>
+
+<div [innerHTML] = "remoteLogData" *ngIf="showRemoteLog" (click)="showRemoteLog=false" class="databox"></div>
+
+<ion-content class="imageBackground">
+    <ion-card>
+        <ion-card-header color="primary">
+            <ion-icon name="cloud-upload" item-start></ion-icon>
+            Main server settings
+        </ion-card-header>
+        <ion-item>
+            <ion-label>Enable</ion-label>
+            <ion-checkbox [(ngModel)]="mainConfig.enabled"></ion-checkbox>
+        </ion-item>
+
+        <ion-list *ngIf="mainConfig.enabled">
+            <ion-item>
+                <ion-label>Prevent LieFi</ion-label>
+                <ion-checkbox [(ngModel)]="mainConfig.preventLieFi"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label>Endpoint (url) *</ion-label>
+                <ion-select [(ngModel)]="mainConfig.service" (ionChange)="setServiceConfigs(mainConfig)">
+                    <ion-option value="wunderground">Wunderground PWS</ion-option>
+                    <ion-option value="thingspeak">Thingspeak</ion-option>
+                    <ion-option value="openweathermap">OpenWeatherMap</ion-option>
+                    <ion-option value="windguru">Windguru</ion-option>
+                    <ion-option value="custom">Custom</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="mainConfig.service=='custom'">
+                <ion-label floating>Custom url</ion-label>
+                <ion-input type="url" [(ngModel)]="mainConfig.url"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Method</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label></ion-label>
+                <ion-select [(ngModel)]="mainConfig.method">
+                    <ion-option value="post">POST</ion-option>
+                    <ion-option value="post_json">POST JSON</ion-option>
+                    <ion-option value="get">GET</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Define a successfull response</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label></ion-label>
+                <ion-select [(ngModel)]="mainConfig.success">
+                    <ion-option value="code">HTTP code</ion-option>
+                    <ion-option value="data">Response data</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="mainConfig.success=='code'">
+                <ion-label>Define HTTP code</ion-label>
+                <ion-select [(ngModel)]="mainConfig.success_code">
+                    <ion-option value="200" >HTTP 200</ion-option>
+                    <ion-option value="custom">Custom code</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="mainConfig.success=='code' && mainConfig.success_code=='custom'">
+                <ion-label floating>Enter custom HTTP code</ion-label>
+                <ion-input type="number" step='1' [(ngModel)]="mainConfig.success_custom_code"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="mainConfig.success=='data'">
+                <ion-label>Set data</ion-label>
+                <ion-select [(ngModel)]="mainConfig.success_data">
+                    <ion-option value="ok" >Word "ok"</ion-option>
+                    <ion-option value="success">String "success"</ion-option>
+                    <ion-option value="1">String/value "1"</ion-option>
+                    <ion-option value="any">Any non empty response</ion-option>
+                    <ion-option value="non_zero">Any number other than 0</ion-option>
+                    <ion-option value="custom">Custom string value</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item *ngIf="mainConfig.success=='data' && mainConfig.success_data=='custom'">
+                <ion-label floating>Enter exact value</ion-label>
+                <ion-input type="text" [(ngModel)]="mainConfig.success_custom_data"></ion-input>
+            </ion-item>
+
+            <ion-card-header color="primary">
+                Data customization
+            </ion-card-header>
+            <ion-item-group>
+                <ion-item>
+                    <ion-label>Send field if value is null?</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.sendFieldsWithNullValues"></ion-checkbox>
+                </ion-item>
+                <ion-item ng-if="mainConfig.method == 'post_json'">
+                    <ion-label>Send Json payload as array</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.send_payload_as_array"></ion-checkbox>
+                </ion-item>
+                <ion-item ng-if="mainConfig.method != 'get'">
+                    <ion-label>Send password field as GET parameter</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.append_password_to_url"></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Retry sending unsent samples</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.retryUnsentSamples"></ion-checkbox>
+                </ion-item>
+            </ion-item-group>
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Name, identifier, PWS ID or channel</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.station_id.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="mainConfig.fields.station_id.send">
+                    <ion-label floating>Enter value</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.station_id.value"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.station_id.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.station_id.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Password, token or  api key</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.password.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="mainConfig.fields.password.send">
+                    <ion-label floating>Enter value</ion-label>
+                    <ion-input type="password" [(ngModel)]="mainConfig.fields.password.value"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.password.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.password.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Mobile battery level</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.battery_level.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="mainConfig.fields.battery_level.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.battery_level.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Is mobile plugged (true/false)</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.battery_is_plugged.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="mainConfig.fields.battery_is_plugged.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.battery_is_plugged.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Created at</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.created_at_utc.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="mainConfig.fields.created_at_utc.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.created_at_utc.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.created_at_utc.send">
+                    <ion-label>Send as</ion-label>
+                    <ion-select [(ngModel)]="mainConfig.fields.created_at_utc.format">
+                        <ion-option value="utc" >YYYY-MM-DD HH:mm:ss (UTC)</ion-option>
+                        <ion-option value="local">YYYY-MM-DD HH:mm:ss (local)</ion-option>
+                        <ion-option value="unix" >UNIX timestamp</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Wind</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.wind.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="mainConfig.fields.wind.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.wind.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.wind.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="mainConfig.fields.wind.format">
+                        <ion-option value="mtsph" >mts/hour</ion-option>
+                        <ion-option value="mtsps" >mts/sec</ion-option>
+                        <ion-option value="kmph">km/hour</ion-option>
+                        <ion-option value="mph">miles/hour</ion-option>
+                        <ion-option value="knts">knots</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Gust</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.gust.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="mainConfig.fields.gust.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.gust.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.gust.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="mainConfig.fields.gust.format">
+                        <ion-option value="mtsph" >mts/hour</ion-option>
+                        <ion-option value="mtsps" >mts/sec</ion-option>
+                        <ion-option value="kmph">km/hour</ion-option>
+                        <ion-option value="mph">miles/hour</ion-option>
+                        <ion-option value="knts">knots</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Wind angle (0 to 360º)</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.wind_angle.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="mainConfig.fields.wind_angle.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.wind_angle.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Gust angle (0 to 360º)</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.gust_angle.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="mainConfig.fields.gust_angle.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.gust_angle.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Rain (minute)</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.rain.send"></ion-checkbox>
+                </ion-item-divider>                
+
+                <ion-item *ngIf="mainConfig.fields.rain.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.rain.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.rain.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="mainConfig.fields.rain.format">
+                        <ion-option value="mm" >mm</ion-option>
+                        <ion-option value="in">in</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Rain (hour)</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.rain_hour.send"></ion-checkbox>
+                </ion-item-divider>                
+
+                <ion-item *ngIf="mainConfig.fields.rain_hour.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.rain_hour.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.rain_hour.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="mainConfig.fields.rain_hour.format">
+                        <ion-option value="mm" >mm</ion-option>
+                        <ion-option value="in">in</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Temperature</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.temperature.send"></ion-checkbox>
+                </ion-item-divider>                
+
+                <ion-item *ngIf="mainConfig.fields.temperature.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.temperature.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.temperature.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="mainConfig.fields.temperature.format">
+                        <ion-option value="C" >Cº</ion-option>
+                        <ion-option value="F">Fº</ion-option> 
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Humidity (0 to 100)</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.humidity.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="mainConfig.fields.humidity.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.humidity.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Absolute pressure</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.pressure.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="mainConfig.fields.pressure.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.pressure.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.pressure.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="mainConfig.fields.pressure.format">
+                        <ion-option value="Pa" >Pa</ion-option>
+                        <ion-option value="hPa">hPa</ion-option>
+                        <ion-option value="kPa">kPa</ion-option>
+                        <ion-option value="inHg">inHg</ion-option>
+                        <ion-option value="mmHg">mmHg</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Sea level pressure</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.relative_pressure.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="mainConfig.fields.relative_pressure.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.relative_pressure.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.relative_pressure.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="mainConfig.fields.relative_pressure.format">
+                        <ion-option value="Pa" >Pa</ion-option>
+                        <ion-option value="hPa">hPa</ion-option>
+                        <ion-option value="kPa">kPa</ion-option>
+                        <ion-option value="inHg">inHg</ion-option>
+                        <ion-option value="mmHg">mmHg</ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.relative_pressure.send">
+                    <ion-label floating>Enter location altitude  (meters)</ion-label>
+                    <ion-input type="number" steps="0.1" min="0" max="10000" required="required" [(ngModel)]="mainConfig.fields.relative_pressure.value"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Light (lux)</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.light.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="mainConfig.fields.light.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.light.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Custom field 1</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.custom_1.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="mainConfig.fields.custom_1.send">
+                    <ion-label floating>Enter value</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.custom_1.value"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.custom_1.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.custom_1.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Custom field 2</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.fields.custom_2.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="mainConfig.fields.custom_2.send">
+                    <ion-label floating>Enter value</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.custom_2.value"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="mainConfig.fields.custom_2.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="mainConfig.fields.custom_2.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+        </ion-list>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header color="primary">
+            <ion-icon name="cloud-upload" item-start></ion-icon>
+            Secondary server settings
+        </ion-card-header>
+        <ion-item>
+            <ion-label>Enable</ion-label>
+            <ion-checkbox [(ngModel)]="secondaryConfig.enabled"></ion-checkbox>
+        </ion-item>
+        <ion-list *ngIf="secondaryConfig.enabled">
+            <ion-item>
+                <ion-label>Prevent LieFi</ion-label>
+                <ion-checkbox [(ngModel)]="secondaryConfig.preventLieFi"></ion-checkbox>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Service endpoint (url) *</ion-label>
+            </ion-item>
+
+            <ion-item>
+                <ion-label></ion-label>
+                <ion-select [(ngModel)]="secondaryConfig.service" (ionChange)="setServiceConfigs(secondaryConfig)">
+                    <ion-option value="wunderground">Wunderground PWS</ion-option>
+                    <ion-option value="thingspeak">Thingspeak</ion-option>
+                    <ion-option value="openweathermap">OpenWeatherMap</ion-option>
+                    <ion-option value="windguru">Windguru</ion-option>
+                    <ion-option value="custom">Custom</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="secondaryConfig.service=='custom'">
+                <ion-label floating>Custom url</ion-label>
+                <ion-input type="url" [(ngModel)]="secondaryConfig.url"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Method</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label></ion-label>
+                <ion-select [(ngModel)]="secondaryConfig.method">
+                    <ion-option value="post">POST</ion-option>
+                    <ion-option value="post_json">POST JSON</ion-option>
+                    <ion-option value="get">GET</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Define a successfull response</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label></ion-label>
+                <ion-select [(ngModel)]="secondaryConfig.success">
+                    <ion-option value="code">HTTP code</ion-option>
+                    <ion-option value="data">Response data</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="secondaryConfig.success=='code'">
+                <ion-label>Define HTTP code</ion-label>
+                <ion-select [(ngModel)]="secondaryConfig.success_code">
+                    <ion-option value="200" >HTTP 200</ion-option>
+                    <ion-option value="custom">Custom code</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="secondaryConfig.success=='code' && secondaryConfig.success_code=='custom'">
+                <ion-label floating>Enter custom HTTP code</ion-label>
+                <ion-input type="number" step='1' [(ngModel)]="secondaryConfig.success_custom_code"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="secondaryConfig.success=='data'">
+                <ion-label>Set data</ion-label>
+                <ion-select [(ngModel)]="secondaryConfig.success_data">
+                    <ion-option value="ok" >Word "ok"</ion-option>
+                    <ion-option value="success">String "success"</ion-option>
+                    <ion-option value="1">String/value "1"</ion-option>
+                    <ion-option value="any">Any non empty response</ion-option>
+                    <ion-option value="non_zero">Any number other than 0</ion-option>
+                    <ion-option value="custom">Custom string value</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item *ngIf="secondaryConfig.success=='data' && secondaryConfig.success_data=='custom'">
+                <ion-label floating>Enter exact value</ion-label>
+                <ion-input type="text" [(ngModel)]="secondaryConfig.success_custom_data"></ion-input>
+            </ion-item>
+
+            <ion-card-header color="primary">
+                Data customization
+            </ion-card-header>
+            <ion-item-group>
+                <ion-item>
+                    <ion-label>Send field if value is null?</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.sendFieldsWithNullValues"></ion-checkbox>
+                </ion-item>
+                <ion-item ng-if="secondaryConfig.method == 'post_json'">
+                    <ion-label>Send Json payload as array</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.send_payload_as_array"></ion-checkbox>
+                </ion-item>
+                <ion-item ng-if="secondaryConfig.method != 'get'">
+                    <ion-label>Send password field as GET parameter</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.append_password_to_url"></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Retry sending unsent samples</ion-label>
+                    <ion-checkbox [(ngModel)]="mainConfig.retryUnsentSamples"></ion-checkbox>
+                </ion-item>
+            </ion-item-group>
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Name, identifier, PWS ID or channel</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.station_id.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="secondaryConfig.fields.station_id.send">
+                    <ion-label floating>Enter value</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.station_id.value"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.station_id.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.station_id.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Password, token or  api key</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.password.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="secondaryConfig.fields.password.send">
+                    <ion-label floating>Enter value</ion-label>
+                    <ion-input type="password" [(ngModel)]="secondaryConfig.fields.password.value"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.password.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.password.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Mobile battery level</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.battery_level.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="secondaryConfig.fields.battery_level.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.battery_level.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Is mobile plugged (true/false)</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.battery_is_plugged.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="secondaryConfig.fields.battery_is_plugged.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.battery_is_plugged.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Created at</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.created_at_utc.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="secondaryConfig.fields.created_at_utc.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.created_at_utc.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.created_at_utc.send">
+                    <ion-label>Send as</ion-label>
+                    <ion-select [(ngModel)]="secondaryConfig.fields.created_at_utc.format">
+                        <ion-option value="utc" >YYYY-MM-DD HH:mm:ss (UTC)</ion-option>
+                        <ion-option value="local">YYYY-MM-DD HH:mm:ss (local)</ion-option>
+                        <ion-option value="unix" >UNIX timestamp</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Wind</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.wind.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="secondaryConfig.fields.wind.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.wind.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.wind.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="secondaryConfig.fields.wind.format">
+                        <ion-option value="mtsph" >mts/hour</ion-option>
+                        <ion-option value="mtsps" >mts/sec</ion-option>
+                        <ion-option value="kmph">km/hour</ion-option>
+                        <ion-option value="mph">miles/hour</ion-option>
+                        <ion-option value="knts">knots</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Gust</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.gust.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="secondaryConfig.fields.gust.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.gust.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.gust.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="secondaryConfig.fields.gust.format">
+                        <ion-option value="mtsph" >mts/hour</ion-option>
+                        <ion-option value="mtsps" >mts/sec</ion-option>
+                        <ion-option value="kmph">km/hour</ion-option>
+                        <ion-option value="mph">miles/hour</ion-option>
+                        <ion-option value="knts">knots</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Wind angle (0 to 360º)</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.wind_angle.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="secondaryConfig.fields.wind_angle.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.wind_angle.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Gust angle (0 to 360º)</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.gust_angle.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="secondaryConfig.fields.gust_angle.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.gust_angle.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Rain (minute)</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.rain.send"></ion-checkbox>
+                </ion-item-divider>                
+
+                <ion-item *ngIf="secondaryConfig.fields.rain.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.rain.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.rain.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="secondaryConfig.fields.rain.format">
+                        <ion-option value="mm" >mm</ion-option>
+                        <ion-option value="in">in</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Rain (hour)</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.rain_hour.send"></ion-checkbox>
+                </ion-item-divider>                
+
+                <ion-item *ngIf="secondaryConfig.fields.rain_hour.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.rain_hour.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.rain_hour.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="secondaryConfig.fields.rain_hour.format">
+                        <ion-option value="mm" >mm</ion-option>
+                        <ion-option value="in">in</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Temperature</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.temperature.send"></ion-checkbox>
+                </ion-item-divider>                
+
+                <ion-item *ngIf="secondaryConfig.fields.temperature.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.temperature.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.temperature.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="secondaryConfig.fields.temperature.format">
+                        <ion-option value="C" >Cº</ion-option>
+                        <ion-option value="F">Fº</ion-option> 
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Humidity (0 to 100)</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.humidity.send"></ion-checkbox>
+                </ion-item-divider>
+
+                <ion-item *ngIf="secondaryConfig.fields.humidity.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.humidity.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Pressure</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.pressure.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="secondaryConfig.fields.pressure.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.pressure.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.pressure.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="secondaryConfig.fields.pressure.format">
+                        <ion-option value="Pa" >Pa</ion-option>
+                        <ion-option value="hPa">hPa</ion-option>
+                        <ion-option value="kPa">kPa</ion-option>
+                        <ion-option value="inHg">inHg</ion-option>
+                        <ion-option value="mmHg">mmHg</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Sea level pressure</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.relative_pressure.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="secondaryConfig.fields.relative_pressure.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.relative_pressure.override"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.relative_pressure.send">
+                    <ion-label>Scale to</ion-label>
+                    <ion-select [(ngModel)]="secondaryConfig.fields.relative_pressure.format">
+                        <ion-option value="Pa" >Pa</ion-option>
+                        <ion-option value="hPa">hPa</ion-option>
+                        <ion-option value="kPa">kPa</ion-option>
+                        <ion-option value="inHg">inHg</ion-option>
+                        <ion-option value="mmHg">mmHg</ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.relative_pressure.send">
+                    <ion-label floating>Enter location altitude  (meters)</ion-label>
+                    <ion-input type="number" steps="0.1" min="0" max="10000" required="required" [(ngModel)]="secondaryConfig.fields.relative_pressure.value"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Light (lux)</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.light.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="secondaryConfig.fields.light.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.light.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Custom field 1</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.custom_1.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="secondaryConfig.fields.custom_1.send">
+                    <ion-label floating>Enter value</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.custom_1.value"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.custom_1.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.custom_1.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-label>Custom field 2</ion-label>
+                    <ion-checkbox [(ngModel)]="secondaryConfig.fields.custom_2.send"></ion-checkbox>
+                </ion-item-divider>
+                <ion-item *ngIf="secondaryConfig.fields.custom_2.send">
+                    <ion-label floating>Enter value</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.custom_2.value"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="secondaryConfig.fields.custom_2.send">
+                    <ion-label floating>Field name override</ion-label>
+                    <ion-input type="text" [(ngModel)]="secondaryConfig.fields.custom_2.override"></ion-input>
+                </ion-item>
+            </ion-item-group>
+
+        </ion-list>
+    </ion-card>
+</ion-content>
