@@ -1,0 +1,57 @@
+page-home {
+
+    .toolbar-title-md{
+        font-size: 18px;
+    }
+
+    .range-md.range-has-pin{
+        padding-top: 6px;
+    }
+
+    .chartsSubtitle{
+        text-align: center;
+        font-size: 14px;
+        //color:color($colors, darker, base);
+        font-weight: bold;
+    }
+
+    .chartsSamplesRange{
+        text-align: center;
+        font-size: 11px;
+        color:#555;
+        font-weight: normal;
+    }
+
+    .button.roundButton{
+        border-radius:50%;
+    }
+
+    .ios, .md {
+        page-home {
+            .scroll-content {
+                //jsCharts mod
+                //background-color: color($colors, light);
+            }
+        }
+
+    }
+
+    .card-content-md{
+        padding: 5px 8px;
+    }
+
+    .card-md{
+        width:calc(100% - 8px);
+        margin: 5px;      
+        margin-bottom: 10px;      
+        background-color: rgba(255,255,255,0.65);
+    }
+
+    .card-md .item-md{
+        background-color: rgba(0,0,0,0) !important;
+    }
+
+    .ion-app.md .scroll-content{
+        padding: 10px;
+    }
+}

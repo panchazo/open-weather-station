@@ -1,13 +1,117 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center ion-no-margin ion-no-padding">
+      OpenWeatherStation
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="icon-only" no-padding (click)="showChartOptions()">
+        <ion-icon name="time-outline"></ion-icon>
+      </ion-button>
+      <ion-nav-link router-direction="forward" [component]="devicesPage">
+        <ion-button slot="icon-only" no-padding>
+          <ion-icon name="bluetooth" color="{{isCurrentDeviceConnected?'light':'danger'}}"></ion-icon>
+        </ion-button>
+      </ion-nav-link>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">devices</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content padding="false" class="imageBackground">
+
+  <ion-card *ngIf="oldestSample && latestSample">
+    <ion-card-content>
+      <div style="font-size: 12px;">
+        <span style="font-size:14px"><b>{{totalSamples}} samples available</b></span><br />
+        <span><b>From {{oldestSample.created_at_local | date:'HH:mm MM/dd'}} to {{latestSample.created_at_local |
+            date:'HH:mm:ss MM/dd/yy'}}</b></span><br />
+        <span>Storage limit: {{maxDaysToKeepData}} days</span><br />
+        <span *ngIf="remoteConfigsMainEnabled">Pending upload on main: {{totalSamplesPendingUploadMain}}
+          samples<br /></span>
+        <span *ngIf="remoteConfigsSecondaryMainEnabled">Pending upload on secondary:
+          {{totalSamplesPendingUploadSecondary}} samples<br /></span>
+        <hr>
+        <span><b>Latest conditions from {{moment(latestSample.created_at_local).fromNow()}}...</b></span><br />
+        <span>Wind: {{latestSample.getPropertyByName("wind", "kmph")}} km/h - Direction:
+          {{latestSample.getPropertyByName("wind_angle", "kmph")}}º</span><br />
+        <span>Gust: {{latestSample.getPropertyByName("gust", "kmph")}} km/h - Direction:
+          {{latestSample.getPropertyByName("gust_angle", "kmph")}}º</span><br />
+        <span>Temperature: {{latestSample.getPropertyByName("temperature", "C")}} Cº</span> -
+        <span>Humidity: {{latestSample.getPropertyByName("humidity")}} %</span><br />
+        <span>Pressure: {{latestSample.getPropertyByName("pressure", "hPa")}} hPa</span> -
+        <span>Rain: {{latestSample.getPropertyByName("rain", "mm")}} mm</span> -
+        <span>Light: {{latestSample.getPropertyByName("light")}} lux</span><br />
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="showDateTimeSelection">
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-input type="date" placeholder="choose date..." [(ngModel)]="showChartDateFrom"></ion-input>
+      </ion-item>
+      <ion-item padding-top>
+        <ion-badge item-start>From {{showChartTimeRange.lower}} hs</ion-badge>
+        <ion-range dualKnobs="true" min="0" max="24" step="1" snaps="true" pin="true"
+          [(ngModel)]="showChartTimeRange"></ion-range>
+        <ion-badge item-end>To {{showChartTimeRange.upper}} hs</ion-badge>
+        <button [disabled]="!showChartDateFrom || showChartTimeRange.upper==showChartTimeRange.lower" ion-button
+          item-end no-padding class="roundButton" color="secondary" (click)="updateChartDateTimeRange()">
+          <ion-icon name="checkmark" color="white"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="!oldestSample || !latestSample || chartSamples.length==0" class="chartsSubtitle" style="text-align: center;">
+    <b>No samples available</b>
+  </div>
+
+  <div *ngIf="oldestSample && latestSample && chartSamples.length>0 && !showDateTimeSelection" class="chartsSubtitle">
+    <b>Showing past {{showChartByLastXHours>1?showChartByLastXHours + " hours":"hour"}}</b><br>
+  </div>
+
+  <div class="chartsSamplesRange" *ngIf="chartSamples && chartSamples.length">
+    Samples available from {{chartSamples[0].created_at_local | date:'HH:mm'}} to
+    {{chartSamples[chartSamples.length-1].created_at_local | date:'HH:mm MM/dd/yy'}}<br>
+  </div>
+
+  <ion-card>
+    <ion-card-content>
+      <canvas #windAndGustCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <canvas #angleCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <canvas #temperatureCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <canvas #humidityCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <canvas #pressureCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <canvas #rainCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <canvas #lightCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
